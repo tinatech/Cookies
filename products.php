@@ -1,10 +1,13 @@
 <?php
-require_once("./conf/config.php");
+require("loadenv.php");
 include "functions.php";
-include "./lib/db.php";
+include "./lib/DB.php";
+
 
 // Henter inn header informasjon
-include_once("header.php");
+
+echo $gui::header("The Dark Cookie Shop");
+echo $gui::menu("user");
 ?>
 <div id="content">
 
@@ -23,6 +26,4 @@ include_once("header.php");
 	
 </div>
 
-<?php
-include_once("footer.php");
-?>
+<?php echo $gui::footer(); ?>

@@ -3,8 +3,11 @@ require("loadenv.php");
 include "functions.php";
 include "./lib/DB.php";
 
+
 // Henter inn header informasjon
-include_once("header.php");
+
+echo $gui::header("The Dark Cookie Shop");
+echo $gui::menu("user");
 ?>
 <div id="content">
 	<div id="sidebar"> <!--start sidebar-->	
@@ -23,4 +26,4 @@ include_once("header.php");
 
 </div> <!-- End content -->
 
-<?php include_once("footer.php"); ?>
+<?php echo $gui::footer(); ?>
