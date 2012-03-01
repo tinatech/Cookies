@@ -1,6 +1,6 @@
 <?php
-include "hjelpefunksjoner.php";
-include "database.php";
+include "functions.php";
+include "./lib/DB.php";
 
 // Henter inn header informasjon
 include_once("header.php");

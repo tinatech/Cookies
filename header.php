@@ -19,15 +19,14 @@
 	<!-- Meny -->
 	<ul> 
 		<a href="index.php"><li class="first">Forsiden</li> </a>
-		<a href="om.php" ><li>The Dark Cookie Shop</li> </a>
-		<a href="vare.php" id="current"><li>Varer</li> </a>
-		<a href="kontakt.php"><li>Kontakt oss</li> </a>
-		<a href="ansatt.php"><li>Ansatt</li> </a>
+		<a href="about.php" ><li>The Dark Cookie Shop</li> </a>
+		<a href="products.php" id="current"><li>Varer</li> </a>
+		<a href="contact.php"><li>Kontakt oss</li> </a>
 	</ul> 
 	
 	<!-- Søk -->
 	<div id="search">	
-		<form action="sok.php" method="POST" id="searchForm" name="sok">
+		<form action="search.php" method="POST" id="searchForm" name="sok">
 			<fieldset>
 				<input type="text" id="search_term" name="keywords" value="" class="clearClick"/>
 				<a id="search_go" href="javascript:submitform()">Søk</a>

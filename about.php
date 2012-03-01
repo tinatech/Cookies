@@ -1,6 +1,7 @@
 <?php
-include "hjelpefunksjoner.php";
-include "database.php";
+require_once("./conf/config.php");
+include "functions.php";
+include "./lib/db.php";
 
 // Henter inn header informasjon
 include_once("header.php");
@@ -17,12 +18,10 @@ include_once("header.php");
 </div> <!--end sidebar-->
 
 	
-	<h2> The Dark Cookie Shop </h2>
-	<p>Petter</p>
-	<p>Christoffer</p>
-	<p>Kjetil</p>
-	<p>Tina</p>
 	
+	<h2> The Dark Cookie Shop </h2>
+	<p>Nettbutikken The Dark Cookie Shop er basert på "Welcome to the dark side, we have cookies..." </p>
+	<p>- Petter, Christoffer, Kjetil og Tina</p>
 	
 	
 	
