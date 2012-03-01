@@ -1,6 +1,7 @@
 *
 {
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Trebuchet MS', Arial, sans-serif;
+	font-size: 11px;
 }
 
 body{
@@ -35,13 +36,14 @@ header {
 	}
 	
 #content {
-	width: 980px;
+	width: 970px;
 	min-height: 500px;
 	background-color: #fff;
+	padding: 0 5px 0 5px;
 }
 
 #mainbar {
-	width: 670px;
+	width: 660px;
 	}
 
 #sidebar{
@@ -101,10 +103,7 @@ h6{
 	float:right;
 	margin: 0 0 0 0;
 }
-p{
-	
-	font-size:14px;
-}
+
 
 /*****************
 MENY
