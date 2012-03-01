@@ -1,4 +1,5 @@
 <?php
+require("loadenv.php");
 include "functions.php";
 include "./lib/DB.php";
 

@@ -12,11 +12,9 @@
 // PATHS
 ///////////////////////////////////////////////////////////////////////////////
 
-define('ROOT_DIR', dirname(__FILE__));
-define('LIB_DIR', '');
-define('CONF_DIR', '');
-define('IMG_DIR', '');
-define('STYLE_DIR','');
+$lib = 'lib/';
+$img = 'images/';
+$style = 'css/';
 
 ///////////////////////////////////////////////////////////////////////////////
 // DEBUG AND LOGGING
