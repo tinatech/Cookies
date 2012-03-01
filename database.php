@@ -1,13 +1,12 @@
-<!--
-	Dette er en databasefil.  her har vi en del funksjoner
--->
 <?php
+// Dette er en databasefil.  Her har vi en del funksjoner
+
 function koble_opp(){
 
 	$tjener = "localhost";
 	$brukernavn = "root";
 	$passord = "";
-	$db = "nettbutikk";
+	$db = "Webshop";
 	
 	$forbindelse = mysql_connect($tjener, $brukernavn, $passord);
 	mysql_select_db($db);
