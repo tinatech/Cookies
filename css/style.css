@@ -34,20 +34,23 @@ header {
 	margin-top: 30px;
 	}
 	
-#content {
-	width: 980px;
+#content1{
+	width: 960px;
 	min-height: 500px;
 	background-color: #fff;
+	padding: 10px;
 }
-
-#mainbar {
-	width: 670px;
-	}
-
+#content2{
+	width: 960px;
+	min-height: 500px;
+	background-color: #fff;
+	padding: 5px;
+}
 #sidebar{
 	float: right;
-	width: 300px;
+	width: 310px;
 	background-color: #fff;
+	padding: 5px;
 	
 }
 
@@ -57,11 +60,15 @@ header {
 	border-color: #0000ff;
 }
 
-#bestsellers {
+#bestsellers, #login{
 	border-width:thin;
 	border-color: #ff0000;
 	background-color:#e9e9e9;
-	padding: 10px;
+	padding: 3px;
+	margin:10px;
+	-moz-box-shadow: 0 0 3px #888888;
+	-webkit-box-shadow: 0 0 3px #888888;
+	box-shadow: 0 0 5px #888888;
 }
 
 img {
@@ -151,7 +158,7 @@ MENY
 #search {
 	width: 162px;
 	float: right;
-	margin-top: 6px;
+	margin-top: 5px;
 	}
 	
 #search input {
