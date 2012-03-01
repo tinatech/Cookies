@@ -1,6 +1,6 @@
 <?php
 
-include_once 'DB.php';
+include_once './lib/DB.php';
 
 	////Denne klassen inneholder alle input-tabeller som benyttes av cookie webshop.
 		//Det vil si at dette er en VIEW-klasse som ikke gjør noe annet enn å vise tabeller 
