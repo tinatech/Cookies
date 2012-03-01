@@ -1,25 +1,5 @@
 <?php
 
-function topp()
-{
-  print("<html>\n");
-  print("<head>\n");
-  print("<title>The Dark Cookie Shop</title>\n");
-  print("<link rel='stylesheet' type='text/css'" . "href='css/style.css'/>\n");
-  print("</head>\n");
-  print("<body>\n");
-}
-
-function bunn()
-{
-  print("<hr/>\n" .
-        "<h6>" .
-        "&copy; The Dark Cookie Shop 2012" .
-        "</h6>\n");
-  print("</body>\n");
-  print("</html>\n");
-}
-
 function h1($overskrift)
 {
   print("<h1> $overskrift </h1>\n");
