@@ -30,6 +30,9 @@ define('DEBUG', '1');		// Set to '1' or 'true' to se debug output
 ///////////////////////////////////////////////////////////////////////////////
 
 /* Auth class constants  */
+const AUTH_ERROR_EMPTY = "Please type in a username and password"; 
+const AUTH_ERROR_VALIDATE = "Authentication failed"; 
+const AUTH_ERROR_LOGIN = "Login failed" 
 
 
 ?>
