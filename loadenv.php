@@ -17,6 +17,10 @@ define('CSSDIR', "http://" . $_SERVER['HTTP_HOST'] . "/" . $style);
 
 
 // Load gui class
-include_once "lib/webshopgui.php";
+include_once ("lib/webshopgui.php");
 $gui = new WebshopGui;
+
+// Load view class
+include_once ("lib/view.php");
+$view = new View;
 ?>

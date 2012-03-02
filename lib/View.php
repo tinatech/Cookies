@@ -1,10 +1,7 @@
 <?php
-
-include_once './lib/DB.php';
-
-	////Denne klassen inneholder alle input-tabeller som benyttes av cookie webshop.
-		//Det vil si at dette er en VIEW-klasse som ikke gjør noe annet enn å vise tabeller 
-			//og sende data til funksjoner til de ulike klassene.
+////Denne klassen inneholder alle input-tabeller som benyttes av cookie webshop.
+	//Det vil si at dette er en VIEW-klasse som ikke gjør noe annet enn å vise tabeller 
+		//og sende data til funksjoner til de ulike klassene.
 class View {
 
 //¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ INPUT ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
@@ -76,7 +73,7 @@ class View {
 	
 		//Admin og medarbeider skal kunne se hvem som er admin og medarbeider.
 	function ShowManagers() {
-	
+		echo "Her kommer funksjon som henter alle workers fra databasen";
 	}
 	
 	

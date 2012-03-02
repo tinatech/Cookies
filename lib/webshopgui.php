@@ -31,7 +31,7 @@ class WebshopGui {
 
 					<header>
 						<div id="webshopname"><h1>'.$name.'</h1></div>
-						<div id="userinfo">Logg inn | Regisrer deg som bruker</div>
+						<div id="userinfo">Logg inn | Registrer deg som kunde</div>
 					</header>';
 		
 		return $content;
@@ -65,8 +65,9 @@ class WebshopGui {
 		if ($user == "admin") {
 			$menu = '<ul> 
 					<a href="index.php"><li class="first">Ordre</li> </a>
-					<a href="#"><li>Varer</li> </a>
-					<a href="#"><li>Brukere</li> </a>
+					<a href="products.php"><li>Varer</li> </a>
+					<a href="users.php"><li>Brukere</li> </a>
+					<a href="customers.php"><li>Kunder</li> </a>
 					</ul>';
 		}
 			
@@ -102,6 +103,46 @@ class WebshopGui {
 				'.$menu.'
 			</div> 
 			';
+		return $content;
+		}
+		
+//**************************************//
+//				UNDERMENY				//
+// Send inn hvilken meny du ønsker      //
+// orders, products eller users         //
+//**************************************//
+	function SecondMenu($menu) {
+		if($menu == "orders"){
+			$menu = '<a href="#"><li class="first">Ubehandlet (0)</li> </a>
+					 <a href="#"><li>Under behandling (0)</li> </a>
+					 <a href="#"><li>Ferdigbehandlet</li> </a>';
+		}
+		
+		elseif($menu == "products"){
+			$menu = '<a href="#"><li class="first">Varer</li> </a>
+					 <a href="#"><li>Legg til vare</li> </a>
+					 <a href="#"><li>Legg til kategori</li> </a>
+					 <a href="#"><li>Kampanje</li> </a>';
+		}
+		
+		elseif($menu == "users"){
+			$menu = '<a href="#"><li class="first">Brukere</li> </a>
+					 <a href="#"><li>Legg til bruker</li> </a>';
+		}
+		
+		elseif($menu == "customers"){
+			$menu = '<a href="#"><li class="first">Kunder</li> </a>
+					 <a href="#"><li>Legg til kunde</li> </a>';
+		}
+		
+		else { $menu = '<li>Error: Finner ikke menyen "'.$menu.'".'; }
+		
+		$content = '<div id="secondmenu">
+					<ul> 
+					' . $menu . '
+					</ul>
+					</div>';
+		
 		return $content;
 		}
 

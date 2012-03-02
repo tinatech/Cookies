@@ -1,10 +1,11 @@
 <?php
 include_once("header.php");
-echo $gui::secondmenu("orders");
+echo $gui::secondmenu("users");
 ?>
 <div id="content">
 	<div id="mainbar">
-		<h2>Ubehandlede ordrer:</h2>
+		<h2>Brukere:</h2>
+		<?php echo $view::ShowManagers(); ?>
 	</div><!-- End mainbar -->	
 	
 </div><!-- End content -->
