@@ -1,6 +1,6 @@
 <?php
 /**
- * auth.php - Authentication class
+ * Login.php - Authentication class
  *
  * @project	DarkCookie Shop
  * @author	Christoffer Hallstensen
@@ -9,8 +9,9 @@
  */
 
 include "./conf/global.php";
+include "DB.php";
 
-class Auth{
+class Login{
 
 	private $user;
 	private $pass;
