@@ -1,6 +1,6 @@
 <?php 
-require_once("header.php");
-/**
+require_once("header.php"); ?>
+
 <div id="content">
 	<div id="sidebar"> <!--start sidebar-->	
 		<div id="bestsellers"> <!--start bestsellers-->
@@ -16,8 +16,9 @@ require_once("header.php");
 	</div> <!-- End leftbar -->
 	
 
-</div> <!-- End content -->-->
- */
-echo $gui::bodyContent();
+</div> <!-- End content -->
+
+<?php
+//echo $gui::bodyContent();
 echo $gui::footer(); 
 ?>
