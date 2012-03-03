@@ -21,7 +21,19 @@ class View {
 		//Denne vises kun når adminbruker er verifisert og logget inn.
 		//Hvilke data som skal inn er beskrevet i sql-tabellen.
 	function NewAdminTable() {
-	
+		$content = 
+			"<form action='' method='post' accept-charset='utf-8'>
+				<table>
+					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
+					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
+					<tr><td>Brukernavn:</td><td><input type='text' name='username' /></td></tr>
+					<tr><td>Epost:</td><td><input type='email' name='email' /></td></tr>
+					<tr><td>Rettigheter:</td><td><select name='admin'><option value='1'>Admin</option><option value='0'>Medarbeider</option></select></td></tr>
+					<tr><td>Passord:</td><td><input type='password' name='password' /></td></tr>
+				</table>
+				<input type='submit' value='Legg til' />	
+			</form>";
+		echo $content;	
 	}
 	
 		//Samme som NewAdminTable (Finnes bare under Adminpanelet.
@@ -72,8 +84,35 @@ class View {
 	
 	
 		//Admin og medarbeider skal kunne se hvem som er admin og medarbeider.
+			//Skal gj¿re slik at du sender inn hvilken rekkeref¿lge du vil at navnene skal vises.
+			//Skal ogsŒ fŒ lagt inn handliger som f.eks slett bak hver bruker.
+			//MŒ man opprette kobling til databasen i hver function eller kan dette gj¿res globalt?
+			//Skal legge inn slik at man ikke fŒr opp handlingsfunksjoner hvis man kun er medarbeider.
 	function ShowManagers() {
-		echo "Her kommer funksjon som henter alle workers fra databasen";
+		// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sth = $db->GetWorker();
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">";
+		echo "<tr id=\"overskrift\"><td>Navn</td><td>Rettigheter</td><td>Brukernavn</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) { 
+			// Finn ut om det er admin eller ikke. Skriv admin eller medarbeider istedet for 1 eller 0
+			if ( $row['admin'] == 1 ){
+				$admin = "Admin";
+				}
+			else {
+				$admin = "Medarbeider";
+				}
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall fŒr <tr> klassen .even
+			// Skriv ut rader.
+ 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td><a href='?remove=".$row['aID']."'>Slett </a>| <a href='?edit=".$row['aID']."'>Rediger</a></td></tr>", "\n";
+			}
+		
+		// Avslutt tabell
+		echo "</table>";
 	}
 	
 	

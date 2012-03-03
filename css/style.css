@@ -193,7 +193,6 @@ MENY
 	height: 34px;
 	width: 980px;
 	margin: 0 auto;
-
 	background-color: #e5e5e5;
 	margin-bottom: 10px;
 	-webkit-border-radius: 5px;
@@ -211,4 +210,25 @@ MENY
 
 #secondmenu a {
 	color: #000;
+	}
+	
+/*****************
+ADMIN
+*****************/
+table { margin-left: -5px; }
+
+table td {
+	padding: 5px;
+	border-bottom: 1px solid #e9e9e9;
+	}
+	
+#workers {
+	width: 980px; }
+
+.even {
+	background-color: #fafafa;
+	}
+	
+#workers #overskrift {
+	background-color: #e9e9e9;
 	}

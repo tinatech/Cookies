@@ -23,4 +23,6 @@ $gui = new WebshopGui;
 // Load view class
 include_once ("lib/view.php");
 $view = new View;
+
+
 ?>

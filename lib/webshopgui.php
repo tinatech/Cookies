@@ -66,7 +66,7 @@ class WebshopGui {
 			$menu = '<ul> 
 					<a href="index.php"><li class="first">Ordre</li> </a>
 					<a href="products.php"><li>Varer</li> </a>
-					<a href="users.php"><li>Brukere</li> </a>
+					<a href="users.php"><li>Medarbeidere</li> </a>
 					<a href="customers.php"><li>Kunder</li> </a>
 					</ul>';
 		}
@@ -126,8 +126,8 @@ class WebshopGui {
 		}
 		
 		elseif($menu == "users"){
-			$menu = '<a href="#"><li class="first">Brukere</li> </a>
-					 <a href="#"><li>Legg til bruker</li> </a>';
+			$menu = '<a href="users.php"><li class="first">Medarbeidere</li> </a>
+					 <a href="usersnew.php"><li>Legg til ny</li> </a>';
 		}
 		
 		elseif($menu == "customers"){

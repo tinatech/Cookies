@@ -2,7 +2,7 @@
 
 /*
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!! ER DET EN TING SOM JEG HAR INNSETT, SÅ ER DET AT JEG TRENGER FUCKINGS MYE HJELP MED      !!!!
+!!!! ER DET EN TING SOM JEG HAR INNSETT, Sâ‰ˆ ER DET AT JEG TRENGER FUCKINGS MYE HJELP MED      !!!!
 !!!! DATABASEN ETTERSOM DET ER EN SHITLOAD AV QUERIES SOM SKAL SJEKKES OPP MOT ALT MULIG !!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
@@ -16,16 +16,16 @@ class Database {
 	
 	
 
-		//Constructor kjører når klassen Database blir tilkalt.
-		//Sjekker først om det faktisk finnes en session.
+		//Constructor kjÂ¯rer nÃ‚r klassen Database blir tilkalt.
+		//Sjekker fÂ¯rst om det faktisk finnes en session.
 	function __construct () {
 			//Simpel tilkobling opp til databasen uten hjelp av sessions.
-				//spørsmålet er om vi skal lage en egen funksjon som
+				//spÂ¯rsmÃ‚let er om vi skal lage en egen funksjon som
 				//CloseSession() eller om vi skal benytte oss av construct..
 		if(Database::$this->DB == false) {
-			$connect = 'mysql:host=127.0.0.1;dbname=personinfo';
+			$connect = 'mysql:host=localhost;dbname=Webshop';
 			try {
-				Database::$this->DB = new PDO($connect, user, password);
+				Database::$this->DB = new PDO($connect, user, password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 			}
 				//Hvis ikke funker, FAIL-message.
 			catch (PDOExeption $e) {
@@ -33,15 +33,15 @@ class Database {
 			}
 		} 
 		return true; //  <---  Finnes en sessjon returneres true. Hvis ikke skal det genereres en.
-								//Shit jeg må sette meg inn i disse greiene med mindre en av dere har en løsning.
+								//Shit jeg mÃ‚ sette meg inn i disse greiene med mindre en av dere har en lÂ¯sning.
 	}
 	//end- __construct
 	
 		
 		/*!!! Ettersom det ikke er mange funksjoner for
-					sessions så er det mest trivielt å ha de i denne
+					sessions sÃ‚ er det mest trivielt Ã‚ ha de i denne
 					databasen. Vet ikke om vi trenger en ny klasse???*/	
-		//Hvis bruker eller admin/medarbeider logger ut dør sessionen
+		//Hvis bruker eller admin/medarbeider logger ut dÂ¯r sessionen
 			//!!!TRENGS VERIFISERING!!!!! Tror ikke dette funker uten cookies??
 	function CloseSession() {
 		if (Database::$this->DB != null) {
@@ -53,18 +53,18 @@ class Database {
 	//end-CloseSession
 	
 	
-// SKAL MAN BLI DIREKTE LOGGET INN NÅ MAN LAGER NY BRUKER 
-	// ELLER MÅ MAN LOGGE INN ETTER AT MAN HAR GENERERT BRUKER???
+// SKAL MAN BLI DIREKTE LOGGET INN Nâ‰ˆ MAN LAGER NY BRUKER 
+	// ELLER Mâ‰ˆ MAN LOGGE INN ETTER AT MAN HAR GENERERT BRUKER???
 	
-//¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ INPUT ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+//Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§ INPUT Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§
 	function NewUser ($type, $input) {
 	//NY BRUKER----
 		if ($type = "newUser") {
 				//$type forteller hva slags type input det gjelder
-				//Andre parametere kan være at bruker bestiller varer
+				//Andre parametere kan vÃŠre at bruker bestiller varer
 			$sql = 'INSERT INTO persinfo (persid, fornavn, etternavn) 
 						VALUES (0, :first, :last)';
-				//Klargjører databasen før parametere i bindparm er satt
+				//KlargjÂ¯rer databasen fÂ¯r parametere i bindparm er satt
 			$sth = Database::$this->DB->prepare($sql);
 				//setter meta alias :.....
 			$sth->bindParam (':first' , $_POST['first']);
@@ -72,10 +72,10 @@ class Database {
 				
 			//Legger til data i databasen	
 				/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				 DERE MÅ HJELPE TIL MED EN TING!!!!!!
-					Hvis jeg gjør en feil spørring ved hjelp av execute så
-					får jeg ingen feilmelding. har ikke sjekket det ut så mye,
-					men nok til å vite at dette er JÆÆVELIG irriterende.......
+				 DERE Mâ‰ˆ HJELPE TIL MED EN TING!!!!!!
+					Hvis jeg gjÂ¯r en feil spÂ¯rring ved hjelp av execute sÃ‚
+					fÃ‚r jeg ingen feilmelding. har ikke sjekket det ut sÃ‚ mye,
+					men nok til Ã‚ vite at dette er Jâˆ†âˆ†VELIG irriterende.......
 				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 			$sth->execute();
 		}
@@ -89,13 +89,31 @@ class Database {
 	
 		//Tar imot ny admin som KUN er tilgjengelig fra admin panelet.
 		//Sendes hit fra View og lagrer i databasen
-	function NewAdmin($input) {
-	
+	function NewAdmin($type, $input) {
+			if($type=="new"){ $sql = "INSERT INTO `Webshop`.`worker` (`aID`, `fname`, `sname`, `email`, `username`, `password`, `admin`) VALUES (NULL, :fname, :sname, :email, :username, :password, :admin)"; }
+			else if($type=="update") { $sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  ':fname', `sname` =  's:name', `email` =  ':email', `username` =  ':username', `password` =  ':password' WHERE  `worker`.`aID` =:aid"; }
+				//KlargjÃ¸rer databasen fÃ¸r parametere i bindparm er satt
+			$sth = Database::$this->DB->prepare($sql);
+				//setter meta alias :.....
+			$sth->bindParam (':fname' , $_POST['fname']);
+			$sth->bindParam (':sname', $_POST['sname']);
+			$sth->bindParam (':email', $_POST['email']);
+			$sth->bindParam (':username', $_POST['username']);
+			$sth->bindParam (':password', md5($_POST['password'])); // Konverterer passordet til md5
+			$sth->bindParam (':admin', $_POST['admin']);
+			if($type=="update") { $sth->bindParam (':aid', $_POST['aid']); }
+			$sth->execute();
 	}
 	//end-NewAdmin
 	
-		//Skal også kun være mulig hvis man er administrator.
-		//Sendes også hit fra View output.
+	//Slett admin - Send inn hvilken aID adminen har.
+	function DeleteAdmin($aID) {
+		$sql = "DELETE FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$aID;
+		$sth = Database::$this->DB->prepare($sql);
+		$sth->execute();
+	}
+		//Skal ogsÃ‚ kun vÃŠre mulig hvis man er administrator.
+		//Sendes ogsÃ‚ hit fra View output.
 	function NewEmployee ($input) {
 	
 	}
@@ -103,7 +121,28 @@ class Database {
 	
 //end-Func's-Input ----------------------------------------------------------------------
 
+//Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§ GET Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§
 
+	function GetWorker() {
+	//NY BRUKER----
+			$sql = "SELECT * FROM  `worker` ORDER BY  `worker`.`sname` ASC";
+				//KlargjÂ¯rer databasen fÂ¯r parametere i bindparm er satt
+			$sth = Database::$this->DB->prepare($sql);
+				//setter meta alias :.....
+							
+			//Legger til data i databasen	
+				/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				 DERE Mâ‰ˆ HJELPE TIL MED EN TING!!!!!!
+					Hvis jeg gjÂ¯r en feil spÂ¯rring ved hjelp av execute sÃ‚
+					fÃ‚r jeg ingen feilmelding. har ikke sjekket det ut sÃ‚ mye,
+					men nok til Ã‚ vite at dette er Jâˆ†âˆ†VELIG irriterende.......
+				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+			$sth->execute();
+		
+		//end-nybruker	
+		
+			return $sth;
+		}
 
 //+ + + + ++ + + +MYE MER HER 
 
