@@ -21,7 +21,7 @@ class WebshopGui {
 					<html>
 					<head>
 						<title>'.$name.'</title>
-						<link rel="stylesheet" type="text/css" href="'.CSSDIR.'style.css" />
+						<link rel="stylesheet" type="text/css" href="' . CSSDIR . 'style.css' .'" />
 						<meta charset="utf-8" />
 					</head>
 					<body>
@@ -144,6 +144,32 @@ class WebshopGui {
 					</div>';
 		
 		return $content;
-		}
+	}
+	
+	function mainbar() {
+		$content = '<div id="mainbar">
+				<h2>Omnomnom</h2>
+				<p>Welcome to the dark side, we go cookies</p>
+			    </div>';
+		echo $content;
+
+	}
+
+	function sidebar() {
+		$content = '<div id="sidebar">
+			    </div>';
+		echo $content;
+	}
+
+
+	function bodyContent() {
+		$content = '
+			<div id="content">
+			'.sidebar().'
+			'.mainbar().' 
+			</div>';	
+	
+		return $content;
+	}
 
 }
