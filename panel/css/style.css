@@ -17,3 +17,17 @@
 	margin-left: -5px;
 	margin-bottom: 10px;
 	}
+
+#new table input {
+	width: 200px;
+	border: 1px solid #5e5e5e;
+	}
+
+#button {
+	margin-top: 10px;
+	}
+	
+#x { height: 9px;
+	width: 9px;
+	}
+img a { border: none; }

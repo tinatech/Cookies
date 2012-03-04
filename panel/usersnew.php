@@ -35,7 +35,7 @@ echo $gui::secondmenu("users");
 				//Skjekker om brukeren faktisk er lagt til eller ikke. Skriver deretter ut tilbakemelding.
 				$sql = "SELECT * FROM `Webshop`.`worker` WHERE `worker`.`username` = '".$_POST['username']."'";
 				$bool = $db->dbQueryExist($sql);
-				if ($bool == true) { echo $gui::verified("Brukeren ble lagt til"); }
+				if ($bool == true) { echo $gui::verified($_POST['fname']." ".$_POST['sname']." ble lagt til"); }
 				elseif ($bool == false) { echo $gui::error("Error: Noe skjedde feil. Brukeren ble ikke lagt til."); }
 			}
 		}

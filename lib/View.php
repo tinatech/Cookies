@@ -20,9 +20,9 @@ class View {
 		
 		//Denne vises kun når adminbruker er verifisert og logget inn.
 		//Hvilke data som skal inn er beskrevet i sql-tabellen.
-	function NewAdminTable() {
+	function newAdminTable() {
 		$content = 
-			"<form action='?p=sendNew' method='post' accept-charset='utf-8'>
+			"<form action='?p=sendNew' method='post' accept-charset='utf-8' id='new'>
 				<table>
 					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
 					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
@@ -32,7 +32,28 @@ class View {
 					<tr><td>Passord:</td><td><input type='password' name='password' /></td></tr>
 					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
 				</table>
-				<input type='submit' value='Legg til' />	
+				<input type='submit' value='Legg til' id='button' />	
+			</form>";
+		echo $content;	
+	}
+	
+	function editAdminTable($input) {
+		$aID = $input[0][0];
+		$selected = "";
+		if ($input[0][6] == "0") { $selected = 'selected'; }
+		$content = 
+			"<form action='?edit=send' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Fornavn:</td><td><input type='text' name='fname' value='".$input[0][1]."'/></td></tr>
+					<tr><td>Etternavn:</td><td><input type='text' name='sname' value='".$input[0][2]."'/></td></tr>
+					<tr><td>Brukernavn:</td><td><input type='text' name='username' value='".$input[0][4]."'/></td></tr>
+					<tr><td>Epost:</td><td><input type='email' name='email' value='".$input[0][3]."'/></td></tr>
+					<tr><td>Rettigheter:</td><td><select name='admin'><option value='1'>Admin</option><option value='0' ".$selected.">Medarbeider</option></select></td></tr>
+					<tr><td>Nytt passord:</td><td><input type='password' name='password' /></td></tr>
+					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
+				</table>
+				<input type='hidden' name ='aid' value='".$aID."' /> 
+				<input type='submit' value='Oppdater' id='button' />
 			</form>";
 		echo $content;	
 	}
@@ -89,14 +110,14 @@ class View {
 			//Skal ogsŒ fŒ lagt inn handliger som f.eks slett bak hver bruker.
 			//MŒ man opprette kobling til databasen i hver function eller kan dette gj¿res globalt?
 			//Skal legge inn slik at man ikke fŒr opp handlingsfunksjoner hvis man kun er medarbeider.
-	function ShowManagers() {
+	function showManagers() {
 		// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
 		$sql = "SELECT * FROM  `worker` ORDER BY  `worker`.`sname` ASC";
 		$sth = $db->dbQuery($sql);
 		
 		// Skriv ut tabellstart
-		echo "<table id=\"workers\" cellspacing=\"0\">";
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
 		echo "<tr id=\"overskrift\"><td>Navn</td><td>Rettigheter</td><td>Brukernavn</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 

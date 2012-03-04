@@ -177,12 +177,12 @@ class WebshopGui {
 //**************************************//
 
 	function error($text) {
-		$content = '<div id="error">'.$text.'</div>';
+		$content = '<div id="error">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'error\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
 		return $content;
 	}
 
 	function verified($text) {
-		$content = '<div id="verified">'.$text.'</div>';
+		$content = '<div id="verified">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'verified\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
 		return $content;
 	}
 	
