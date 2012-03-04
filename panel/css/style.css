@@ -1,1 +1,19 @@
 @import url("../../css/style.css");
+
+#verified {
+	background-color: green;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}
+	
+#error {
+	background-color: red;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}

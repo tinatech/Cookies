@@ -90,7 +90,7 @@ class Database {
 	 */
 
 	function dbQuery ($sql) {
-		$sth = Database::$this->$db->prepare($sql);
+		$sth = Database::$db_link->prepare($sql);
 		$sth->execute();
 		$result = $sth->fetchAll();
 

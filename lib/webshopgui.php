@@ -171,5 +171,29 @@ class WebshopGui {
 	
 		return $content;
 	}
+	
+//**************************************//
+//				MELDINGER				//
+//**************************************//
+
+	function error($text) {
+		$content = '<div id="error">'.$text.'</div>';
+		return $content;
+	}
+
+	function verified($text) {
+		$content = '<div id="verified">'.$text.'</div>';
+		return $content;
+	}
+	
+	
+//**************************************//
+//				LINKS					//
+//**************************************//
+
+	function back() {
+		$content = '<a href="javascript:history.go(-1)">Tilbake</a>'; 
+		return $content;
+		}
 
 }

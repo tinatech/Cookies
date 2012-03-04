@@ -22,7 +22,7 @@ class View {
 		//Hvilke data som skal inn er beskrevet i sql-tabellen.
 	function NewAdminTable() {
 		$content = 
-			"<form action='' method='post' accept-charset='utf-8'>
+			"<form action='?p=sendNew' method='post' accept-charset='utf-8'>
 				<table>
 					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
 					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
@@ -30,6 +30,7 @@ class View {
 					<tr><td>Epost:</td><td><input type='email' name='email' /></td></tr>
 					<tr><td>Rettigheter:</td><td><select name='admin'><option value='1'>Admin</option><option value='0'>Medarbeider</option></select></td></tr>
 					<tr><td>Passord:</td><td><input type='password' name='password' /></td></tr>
+					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
 				</table>
 				<input type='submit' value='Legg til' />	
 			</form>";
@@ -91,7 +92,8 @@ class View {
 	function ShowManagers() {
 		// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
-		$sth = $db->GetWorker();
+		$sql = "SELECT * FROM  `worker` ORDER BY  `worker`.`sname` ASC";
+		$sth = $db->dbQuery($sql);
 		
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">";
