@@ -17,6 +17,25 @@ class View {
 		return $content;
 		}
 		
+	function editUserTable($input) {
+		$content = 
+			"<form action='?edit=send' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Fornavn:</td><td><input type='text' name='fname' value='".$input[0][1]."'/></td></tr>
+					<tr><td>Etternavn:</td><td><input type='text' name='sname' value='".$input[0][2]."'/></td></tr>
+					<tr><td>Addresse:</td><td><input type='text' name='address' value='".$input[0][3]."'/></td></tr>
+					<tr><td>Postnummer:</td><td><input type='text' name='zipcode' value='".$input[0][4]."'/></td></tr>
+					<tr><td>Epost:</td><td><input type='email' name='email' value='".$input[0][5]."'/></td></tr>
+					<tr><td>Brukernavn:</td><td><input type='text' name='username' value='".$input[0][6]."'/></td></tr>
+					<tr><td>Nytt passord:</td><td><input type='password' name='password' /></td></tr>
+					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
+				</table>
+				<input type='hidden' name ='uid' value='".$input[0][0]."' /> 
+				<input type='submit' value='Oppdater' id='button' />
+			</form>";
+		echo $content;	
+	}
+		
 		
 		//Denne vises kun nÂr adminbruker er verifisert og logget inn.
 		//Hvilke data som skal inn er beskrevet i sql-tabellen.
@@ -58,11 +77,6 @@ class View {
 		echo $content;	
 	}
 	
-		//Samme som NewAdminTable (Finnes bare under Adminpanelet.
-	function NewEmployeeTable() {
-	
-	}
-	
 		// Denne vises i admin-panel OG employee-panel
 	function NewCategoryTable() {
 	
@@ -94,8 +108,41 @@ class View {
 
 
 //§§§§§§§§§§§§§§§§§§§§§§§§§§ OUTPUT §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
-	function ShowUsers() {
-	
+	function ShowUsers($order, $active) {
+		// Opprett kobling mot databasen og hent users.
+		$db = new Database;
+		$sql = "SELECT * FROM  `user` WHERE active = '".$active."'".$order;
+		$sth = $db->dbQuery($sql);
+		
+		$gui = new webShopGui;
+		$name = $gui::orderLink("sortByUser", "sname", "Navn");	
+		$zipcode = $gui::orderLink("sortByUser", "zipcode", "Poststed");	
+		$username = $gui::orderLink("sortByUser", "username", "Brukernavn");
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td id='name'>".$name."</td><td>Adresse</td><td>".$zipcode."</td><td id='username'>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) { 
+		
+		//Aktiver eller deaktiv link.
+		if ($active == "0") {
+			$changestatus = "<a href='?user=".$row['uID']."&status=1'>Aktiver </a>";
+		}
+		else if ($active == "1") {
+			$changestatus = "<a href='?user=".$row['uID']."&status=0'>Deaktiver </a>";
+		}
+		
+		$sql = "SELECT city FROM `Webshop`.`zipcodes` WHERE `zipcodes`.`zipcode` =".$row['zipcode'];
+		$city = $db->dbQuery($sql);
+		$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			// Skriv ut rader.
+ 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$row['address']."</td><td>".$row['zipcode']." ".$city[0][0]."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."| <a href='?edit=".$row['uID']."'>Rediger</a></td></tr>", "\n";
+			}
+		
+		// Avslutt tabell
+		echo "</table>";
 	}
 	
 		//Viser oversikt over ordre til enten bruker eller admin/medarbeider.
@@ -110,22 +157,28 @@ class View {
 			//Skal også få lagt inn handliger som f.eks slett bak hver bruker.
 			//Må man opprette kobling til databasen i hver function eller kan dette gjøres globalt?
 			//Skal legge inn slik at man ikke får opp handlingsfunksjoner hvis man kun er medarbeider.
-	function showManagers($order) {
+	function showManagers($order, $active) {
 		// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
-		$sql = "SELECT * FROM  `worker` ".$order;
+		$sql = "SELECT * FROM  `worker` WHERE active = '".$active."'".$order;
 		$sth = $db->dbQuery($sql);
 		
 		$gui = new webShopGui;
-		$name = $gui::orderLink("sname", "Navn");
-		$admin = $gui::orderLink("admin", "Rettigheter");
-		$username = $gui::orderLink("username", "Brukernavn");
+		$name = $gui::orderLink("sortBy", "sname", "Navn");
+		$admin = $gui::orderLink("sortBy", "admin", "Rettigheter");
+		$username = $gui::orderLink("sortBy", "username", "Brukernavn");
 		
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
 		echo "<tr id=\"overskrift\"><td id='name'>".$name."</td><td id='adminstatus'>".$admin."</td><td id='username'>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
+			if ($active == "0") {
+				$changestatus = "<a href='?user=".$row['aID']."&status=1'>Aktiver </a>";
+			}
+			else if ($active == "1") {
+				$changestatus = "<a href='?user=".$row['aID']."&status=0'>Deaktiver </a>";
+			}
 			// Finn ut om det er admin eller ikke. Skriv admin eller medarbeider istedet for 1 eller 0
 			if ( $row['admin'] == 1 ){
 				$admin = "Admin";
@@ -136,7 +189,7 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td><a href='?remove=".$row['aID']."'>Slett </a>| <a href='?edit=".$row['aID']."'>Rediger</a></td></tr>", "\n";
+ 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."| <a href='?edit=".$row['aID']."'>Rediger</a></td></tr>", "\n";
 			}
 		
 		// Avslutt tabell

@@ -10,38 +10,14 @@ echo $gui::secondmenu("users");
 		
 		//Sjekker om ny sortBy session skal settes. Hvis ingen session er satt settes standard.
 		if (isset($_GET['sortBy']) != null && isset($_GET['sortOrder']) != null) {
-			$session::setSortBy($_GET['sortBy'], strtoupper($_GET['sortOrder']));
+			$session::setSortBy("sortBy", $_GET['sortBy'], strtoupper($_GET['sortOrder']));
 		}
-		elseif (!isset($_SESSION['sortBy'])) { $session::setSortBy("sname", "ASC"); }
+		elseif (!isset($_SESSION['sortBy'])) { $session::setSortBy("sortBy", "sname", "ASC"); }
 		
-		//************** DELETE **************//
-		//Hvis get remove er satt og remove er et aID nummer, slettes bruker.
-		if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
-			$gui::h2("Medarbeidere");
-			// Skjekker om brukeren man skal slette faktisk eksiserer.
-			$sql = "SELECT * FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['remove'];
-			$bool = $db->dbQueryExist($sql);
-			
-			//Hvis bruker eksiserer slettes den.
-			if ($bool == true) {
-				$sqlDelete = "DELETE FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['remove'];
-				$db->dbQuery($sqlDelete);
-				
-				//Skjekker om brukeren faktisk er slettet eller ikke. Skriver deretter ut tilbakemelding.
-				$bool = $db->dbQueryExist($sql);
-				if ($bool == true) { echo $gui::error("Error: Noe skjedde feil. Brukeren ble ikke slettet"); }
-				elseif ($bool == false) { echo $gui::verified("Brukeren ble slettet"); }
-			}
-			//Hvis bruker ikke eksiserer skrives ut feilmelding.
-			else {
-				echo $gui::error("Kan ikke slette en bruker som ikke eksiserer");
-			}			
-			$view::showManagers($_SESSION['sortBy']);
-		}
 		
 		//*************** EDIT ***************//
 		// Skriver ut redigeringsskjema hvis $_GET['edit'] er satt og $_GET er et nummer.
-		elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
+		if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
 			$sql = "SELECT * FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['edit'];
 			$result = $db->dbQuery($sql);
 			$gui::h2("Rediger bruker");
@@ -64,11 +40,11 @@ echo $gui::secondmenu("users");
 			$sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  '".$_POST['fname']."', `sname` =  '".$_POST['sname']."', `email` =  '".$_POST['email']."', `username` =  '".$_POST['username']."'".$password.", `admin` =  '".$_POST['admin']."' WHERE  `worker`.`aID` =".$_POST['aid'];
 			$db->dbQuery($sql);
 			$gui::verified($_POST['fname']." ".$_POST['sname']." ble oppdatert");
-			$view::showManagers($_SESSION['sortBy']);
+			$view::showManagers($_SESSION['sortBy'], "1");
 		}
 		
 		//*************** NEW ***************//
-		elseif (isset($_GET['user']) == "sendNew") {
+		elseif (isset($_GET['user']) && $_GET['user'] == "sendNew") {
 			// Skjekker om alle feltene er fylt ut. Hvis ikke får man tilbakemelding på hvem som ikke er det.
 			if (empty($_POST['fname']) || empty($_POST['sname']) || empty($_POST['email']) || empty($_POST['username']) || empty($_POST['password']) || empty($_POST['password2']) ) {
 				echo '<div id="error">Alle felter må fylles ut. Vennligst fyll ut:<br /><ul>';
@@ -106,7 +82,7 @@ echo $gui::secondmenu("users");
 					echo $gui::error("Error: Noe skjedde feil. Brukeren ble ikke lagt til.");
 				}
 				
-				$view::showManagers($_SESSION['sortBy']);
+				$view::showManagers($_SESSION['sortBy'], "1");
 			}
 		}
 		// Skriver ut skjema for innfylling av ny bruker.
@@ -114,12 +90,33 @@ echo $gui::secondmenu("users");
 			$gui::h2("Legg til ny medarbeider");
 			$view::NewAdminTable();
 		}
+		
+		//************ DEACTIVATE OR ACTIVATE USER ************//
+		elseif (isset($_GET['user']) && is_numeric($_GET['user']) && isset($_GET['status'])) { 
+			$gui::h2("Kunder");
+			$sql = "UPDATE  `Webshop`.`worker` SET  `active` =  '".$_GET['status']."' WHERE  `worker`.`aID` =".$_GET['user'];
+			$db->dbQuery($sql);
+			if ($_GET['status'] == "0") {
+				$gui::verified("Brukeren ble deaktivert");
+				$view::showManagers($_SESSION['sortBy'], "1");
+			}
+			elseif ($_GET['status'] == "1") {
+				$gui::verified("Brukeren ble aktivert");
+				$view::showManagers($_SESSION['sortBy'], "0");
+			}
+		}
+		
+		//************ SHOW INACTIVE USERS ************//
+		elseif (isset($_GET['user']) && $_GET['user'] == "inactive") { 
+			$gui::h2("Inaktive medarbeidere");
+			$view::showManagers($_SESSION['sortBy'], "0");
+		}
 				
 		//************ ONLY PRINT ************//
 		else {
 			//Skriver ut alle ansatte.	
 			$gui::h2("Medarbeidere");
-			$view::showManagers($_SESSION['sortBy']);
+			$view::showManagers($_SESSION['sortBy'], "1");
 		}
 		?>	
 	

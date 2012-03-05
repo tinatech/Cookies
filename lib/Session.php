@@ -28,9 +28,8 @@ class Session {
 	 * echo $result;  // ORDER BY `fname` ASC
 	 *
 	 */
-	function setSortBy($row, $order) {
-		$_SESSION['sortBy'] = 'ORDER BY `'.$row.'` '.$order;
-		return $_SESSION['sortBy'];
+	function setSortBy($session, $row, $order) {
+		$_SESSION[''.$session.''] = 'ORDER BY `'.$row.'` '.$order;
 		}
 		
 	
