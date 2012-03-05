@@ -123,7 +123,7 @@ class View {
 		
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
-		echo "<tr id=\"overskrift\"><td>".$name."</td><td>".$admin."</td><td>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
+		echo "<tr id=\"overskrift\"><td id='name'>".$name."</td><td id='adminstatus'>".$admin."</td><td id='username'>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
 			// Finn ut om det er admin eller ikke. Skriv admin eller medarbeider istedet for 1 eller 0

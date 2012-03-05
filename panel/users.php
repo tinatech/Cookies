@@ -15,17 +15,27 @@ echo $gui::secondmenu("users");
 		elseif (!isset($_SESSION['sortBy'])) { $session::setSortBy("sname", "ASC"); }
 		
 		//************** DELETE **************//
-		//Hvis get remove er satt, slettes bruker.
-		if (isset($_GET['remove'])) {
+		//Hvis get remove er satt og remove er et aID nummer, slettes bruker.
+		if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
 			$gui::h2("Medarbeidere");
-			$sql = "DELETE FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['remove'];
-			$db->dbQuery($sql);
-			
-			//Skjekker om brukeren faktisk er slettet eller ikke. Skriver deretter ut tilbakemelding.
+			// Skjekker om brukeren man skal slette faktisk eksiserer.
 			$sql = "SELECT * FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['remove'];
 			$bool = $db->dbQueryExist($sql);
-			if ($bool == true) { echo $gui::error("Error: Noe skjedde feil. Brukeren ble ikke slettet"); }
-			elseif ($bool == false) { echo $gui::verified("Brukeren ble slettet"); }
+			
+			//Hvis bruker eksiserer slettes den.
+			if ($bool == true) {
+				$sqlDelete = "DELETE FROM `Webshop`.`worker` WHERE `worker`.`aID` = ".$_GET['remove'];
+				$db->dbQuery($sqlDelete);
+				
+				//Skjekker om brukeren faktisk er slettet eller ikke. Skriver deretter ut tilbakemelding.
+				$bool = $db->dbQueryExist($sql);
+				if ($bool == true) { echo $gui::error("Error: Noe skjedde feil. Brukeren ble ikke slettet"); }
+				elseif ($bool == false) { echo $gui::verified("Brukeren ble slettet"); }
+			}
+			//Hvis bruker ikke eksiserer skrives ut feilmelding.
+			else {
+				echo $gui::error("Kan ikke slette en bruker som ikke eksiserer");
+			}			
 			$view::showManagers($_SESSION['sortBy']);
 		}
 		
@@ -50,8 +60,7 @@ echo $gui::secondmenu("users");
 					$password = ""; 
 				}
 			}
-			else { $password = ""; }
-			$sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  '".$_POST['fname']."', `sname` =  '".$_POST['sname']."', `email` =  '".$_POST['email']."', `username` =  '".$_POST['username']."'".$password.", `admin` =  '".$_POST['admin']."' WHERE  `worker`.`aID` =".$_POST['aid'];
+			$sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  '".$_POST['fname']."', `sname` =  '".$_POST['sname']."', `email` =  '".$_POST['email']."', `username` =  '".$_POST['username']."'".isset($password).", `admin` =  '".$_POST['admin']."' WHERE  `worker`.`aID` =".$_POST['aid'];
 			$db->dbQuery($sql);
 			$gui::h2("Medarbeidere");
 			$gui::verified($_POST['fname']." ".$_POST['sname']." ble oppdatert");
@@ -80,10 +89,12 @@ echo $gui::secondmenu("users");
 			}
 			
 			else {	//Hvis alt er ok, sendes data over til databasen
-				$db = new Database;
 				$sql = "INSERT INTO `Webshop`.`worker` (`aID`, `fname`, `sname`, `email`, `username`, `password`, `admin`) 
 						VALUES (NULL, '".$_POST['fname']."', '".$_POST['sname']."', '".$_POST['email']."', '".$_POST['username']."', '".md5($_POST['password'])."', '".$_POST['admin']."')";
 				$db->dbQuery($sql);
+				
+				//Skriver ut overskrift
+				$gui::h2("Medarbeidere");
 			
 				//Skjekker om brukeren faktisk er lagt til eller ikke. Skriver deretter ut tilbakemelding.
 				$sql = "SELECT * FROM `Webshop`.`worker` WHERE `worker`.`username` = '".$_POST['username']."'";
@@ -98,6 +109,7 @@ echo $gui::secondmenu("users");
 				$view::showManagers($_SESSION['sortBy']);
 			}
 		}
+		// Skriver ut skjema for innfylling av ny bruker.
 		elseif (isset($_GET['new']) == "user") {
 			$gui::h2("Legg til ny medarbeider");
 			$view::NewAdminTable();
