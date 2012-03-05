@@ -9,6 +9,6 @@ include "../lib/Session.php";
 $session = new Session;
 
 // Henter inn header informasjon
-echo $gui::header("Employee panel");
+echo $gui::header("Administrasjons panel");
 echo $gui::menu("admin");
 ?>
