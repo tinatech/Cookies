@@ -50,6 +50,7 @@ echo $gui::secondmenu("users");
 		
 		// Skjekker om $_GET er satt og satt til send. Skjekker i tilegg om det det er sendt inn noe informasjon for å ikke få feilmeilding hvis det ikke er det.
 		elseif (isset($_GET['edit']) && $_GET['edit'] == "send" && isset($_POST['aid'])) {
+			$gui::h2("Medarbeidere");
 			if (isset($_POST['password'])) {
 				if ($_POST['password'] == $_POST['password2']) {
 					$password = ", `password` =  '".md5($_POST['password'])."'";
@@ -57,12 +58,11 @@ echo $gui::secondmenu("users");
 				// Hvis passordene ikke er like skrives ut feilmelding.
 				elseif ($_POST['password'] != $_POST['password2']) {
 					echo $gui::error("Passordene stemte ikke med hverandre. Nytt passord ikke satt.");
-					$password = ""; 
+					$password = "";
 				}
 			}
-			$sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  '".$_POST['fname']."', `sname` =  '".$_POST['sname']."', `email` =  '".$_POST['email']."', `username` =  '".$_POST['username']."'".isset($password).", `admin` =  '".$_POST['admin']."' WHERE  `worker`.`aID` =".$_POST['aid'];
+			$sql = "UPDATE  `Webshop`.`worker` SET  `fname` =  '".$_POST['fname']."', `sname` =  '".$_POST['sname']."', `email` =  '".$_POST['email']."', `username` =  '".$_POST['username']."'".$password.", `admin` =  '".$_POST['admin']."' WHERE  `worker`.`aID` =".$_POST['aid'];
 			$db->dbQuery($sql);
-			$gui::h2("Medarbeidere");
 			$gui::verified($_POST['fname']." ".$_POST['sname']." ble oppdatert");
 			$view::showManagers($_SESSION['sortBy']);
 		}
