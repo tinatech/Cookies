@@ -22,7 +22,7 @@ class View {
 		//Hvilke data som skal inn er beskrevet i sql-tabellen.
 	function newAdminTable() {
 		$content = 
-			"<form action='?p=sendNew' method='post' accept-charset='utf-8' id='new'>
+			"<form action='?user=sendNew' method='post' accept-charset='utf-8' id='new'>
 				<table>
 					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
 					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
@@ -110,15 +110,20 @@ class View {
 			//Skal ogsŒ fŒ lagt inn handliger som f.eks slett bak hver bruker.
 			//MŒ man opprette kobling til databasen i hver function eller kan dette gj¿res globalt?
 			//Skal legge inn slik at man ikke fŒr opp handlingsfunksjoner hvis man kun er medarbeider.
-	function showManagers() {
+	function showManagers($order) {
 		// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
-		$sql = "SELECT * FROM  `worker` ORDER BY  `worker`.`sname` ASC";
+		$sql = "SELECT * FROM  `worker` ".$order;
 		$sth = $db->dbQuery($sql);
+		
+		$gui = new webShopGui;
+		$name = $gui::orderLink("sname", "Navn");
+		$admin = $gui::orderLink("admin", "Rettigheter");
+		$username = $gui::orderLink("username", "Brukernavn");
 		
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
-		echo "<tr id=\"overskrift\"><td>Navn</td><td>Rettigheter</td><td>Brukernavn</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
+		echo "<tr id=\"overskrift\"><td>".$name."</td><td>".$admin."</td><td>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
 			// Finn ut om det er admin eller ikke. Skriv admin eller medarbeider istedet for 1 eller 0

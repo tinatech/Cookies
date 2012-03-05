@@ -8,7 +8,7 @@
  *
  */
  
-class WebshopGui {
+class webShopGui {
 
 //**************************************//
 //				HEADER					//
@@ -36,6 +36,10 @@ class WebshopGui {
 		
 		return $content;
 	}
+	
+	function h2($name) {
+		echo "<h2>".$name."</h2>";
+		}
 
 //**************************************//
 //				FOOTER					//
@@ -127,7 +131,7 @@ class WebshopGui {
 		
 		elseif($menu == "users"){
 			$menu = '<a href="users.php"><li class="first">Medarbeidere</li> </a>
-					 <a href="usersnew.php"><li>Legg til ny</li> </a>';
+					 <a href="users.php?new=user"><li>Legg til ny</li> </a>';
 		}
 		
 		elseif($menu == "customers"){
@@ -178,12 +182,12 @@ class WebshopGui {
 
 	function error($text) {
 		$content = '<div id="error">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'error\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
-		return $content;
+		echo $content;
 	}
 
 	function verified($text) {
 		$content = '<div id="verified">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'verified\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
-		return $content;
+		echo $content;
 	}
 	
 	
@@ -196,4 +200,25 @@ class WebshopGui {
 		return $content;
 		}
 
+
+	function orderLink($row, $link) {
+		$order = $_SESSION['sortBy'];
+		
+		// Sjekker sname
+		if ($order == 'ORDER BY `'.$row.'` ASC') {
+			$output = "<a href='?sortBy=".$row."&sortOrder=desc'>".$link." <img src='../images/arrow_down.png' alt='' /></a>";
+			}
+		elseif ($order == 'ORDER BY `'.$row.'` DESC') {
+			$output = "<a href='?sortBy=".$row."&sortOrder=asc'>".$link." <img src='../images/arrow_up.png' alt='' /></a>";
+			}
+		else {
+			$output = "<a href='?sortBy=".$row."&sortOrder=asc'>".$link."</a>";
+			}
+				
+		return $output;
+			
+	}
+	
+	
+	
 }
