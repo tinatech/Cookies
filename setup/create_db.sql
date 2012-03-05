@@ -33,6 +33,7 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`user` (
   `email` VARCHAR(45) NOT NULL ,
   `username` VARCHAR(45) NOT NULL ,
   `password` CHAR(32) NOT NULL ,
+  `active` BOOLEAN default 1, 
   PRIMARY KEY (`uID`) ,
   INDEX `FK_zipcode` (`zipcode` ASC) ,
   UNIQUE INDEX `uid_UNIQUE` (`uID` ASC) ,
@@ -56,8 +57,10 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`worker` (
   `email` VARCHAR(45) NOT NULL ,
   `username` VARCHAR(10) NOT NULL ,
   `password` CHAR(32) NOT NULL ,
-  `admin` BOOL NULL ,
-  PRIMARY KEY (`aID`) ,
+  `admin` BOOLEAN NULL ,
+  `active` BOOLEAN default 1, 
+
+PRIMARY KEY (`aID`) ,
   UNIQUE INDEX `aid_UNIQUE` (`aID` ASC) )
 ENGINE = InnoDB;
 
@@ -86,7 +89,7 @@ DROP TABLE IF EXISTS `Webshop`.`category` ;
 CREATE  TABLE IF NOT EXISTS `Webshop`.`category` (
   `catID` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  `desc` VARCHAR(255) NULL ,
+  `descr` VARCHAR(255) NULL ,
   PRIMARY KEY (`catID`) )
 ENGINE = InnoDB;
 
@@ -234,7 +237,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO worker (aID, fname, sname, email, username, password, admin) VALUES (
 	"0" , "Default admin" , "Default admin" , "admin@localhost" , "admin" , md5('admin'), '1');
 
-
+INSERT INTO category (catID, name, descr) VALUES (
+	"0", "uncategorized", "default category");
 
 
 
