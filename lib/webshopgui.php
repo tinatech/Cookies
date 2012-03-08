@@ -119,20 +119,21 @@ class webShopGui {
 		if($menu == "orders"){
 			$menu = '<a href="#"><li class="first">Ubehandlet (0)</li> </a>
 					 <a href="#"><li>Under behandling (0)</li> </a>
-					 <a href="#"><li>Ferdigbehandlet</li> </a>';
+					 <a href="#"><li>Ferdigbehandlet</li> </a>
+					 <a href="#"><li>Alle ordre</li> </a>';
 		}
 		
 		elseif($menu == "products"){
-			$menu = '<a href="#"><li class="first">Varer</li> </a>
-					 <a href="#"><li>Legg til vare</li> </a>
-					 <a href="#"><li>Kategorier</li> </a>
-					 <a href="#"><li>Legg til kategori</li> </a>
+			$menu = '<a href="products.php"><li class="first">Varer</li> </a>
+					 <a href="products.php?item=new"><li>Legg til vare</li> </a>
+					 <a href="category.php"><li>Kategorier</li> </a>
+					 <a href="category.php?cat=new"><li>Legg til kategori</li> </a>
 					 <a href="#"><li>Kampanje</li> </a>';
 		}
 		
 		elseif($menu == "users"){
 			$menu = '<a href="users.php"><li class="first">Medarbeidere</li> </a>
-					 <a href="users.php?new=user"><li>Legg til ny</li> </a>
+					 <a href="users.php?user=new"><li>Legg til ny</li> </a>
 					 <a href="?user=inactive"><li>Inaktive medarbeidere</li> </a>';
 		}
 		

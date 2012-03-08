@@ -8,13 +8,7 @@ class View {
 		//En temp. simpel mother-fucker som sjekker at konseptet fungerer faktisk.
 			//And it fucking does..
 	function newUserTable() {
-		$content = 
-			"<form action='' name='userData'  method='post' id='newUser' accept-charset='utf-8'>
-				Fornavn: <input type='text' name='first' /> <br />
-				Etternavn: <input type='text' name='last' /> <br />
-				<input type='submit' value='OK' />	
-			</form>";
-		return $content;
+
 		}
 		
 	function editUserTable($input) {
@@ -78,14 +72,85 @@ class View {
 	}
 	
 		// Denne vises i admin-panel OG employee-panel
-	function NewCategoryTable() {
-	
+	function newCategoryTable() {
+		$content = 
+			"<form action='?cat=newsend' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Navn:</td><td><input type='text' name='name' /></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='textarea' name='descr' /></td></tr>
+				</table>
+				<input type='submit' value='Legg til' id='button' />	
+			</form>";
+		echo $content;	
 	}
 	
 		//Vises ogsÂ hvis man er admin eller medarbeider
 		//Det skal IKKE vÊre mulig Â opprette en ny vare i en ukjent kategori
 	function NewItemTable() {
+		$db = new Database;
+		$sql = "SELECT * FROM `category`";
+		$sth = $db->dbQuery($sql);
 		
+		$content = 
+			"<form action='?item=newsend' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Navn:</td><td><input type='text' name='name' /></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='text' name='desc' /></td></tr>
+					<tr><td>Kategori:</td><td><select name='cat'>";
+		echo $content;
+		foreach($sth as $row) { 
+		 echo "<option value='".$row['catID']."'>".$row['name']."</option>";
+		}
+					
+		$content2 =	"</select></td></tr>
+					<tr><td>Antall:</td><td><input type='number' min='0' name='quantity' style='width: 50px;' /></td></tr>
+					<tr><td>Pris:</td><td><input type='number' min='0' name='price' style='width: 50px;' /></td></tr>
+				</table>
+				<input type='submit' value='Legg til' id='button' />	
+			</form>";
+		echo $content2;		
+	}
+	
+	function editItem($input) {
+		$db = new Database;
+		$sql = "SELECT * FROM `category`";
+		$sth = $db->dbQuery($sql);
+		$sql2 = "SELECT * FROM `Webshop`.`categories` WHERE `categories`.`itemID` =".$input[0][0];
+		$catID = $db->dbQuery($sql2);
+		
+		$content = 
+			"<form action='?item=editsend' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Navn:</td><td><input type='text' name='name' value='".$input[0][1]."' /></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='text' name='desc' value='".$input[0][3]."' /></td></tr>
+					<tr><td>Kategori:</td><td><select name='cat'>";
+		echo $content;
+		foreach($sth as $row) {
+			if ($catID[0][0] == $row['catID']) { $selected = "selected"; }
+			else { $selected = ""; }
+		 	echo "<option value='".$row['catID']."' ".$selected.">".$row['name']."</option>";
+		}
+					
+		$content2 =	"</select></td></tr>
+					<tr><td>Antall:</td><td><input type='number' min='0' name='quantity' style='width: 50px;' value='".$input[0][2]."' /></td></tr>
+					<tr><td>Pris:</td><td><input type='number' min='0' name='price' style='width: 50px;' value='".$input[0][4]."' /></td></tr>
+				</table>
+				<input type='hidden' name='itemid' value='".$input[0][0]."' />
+				<input type='hidden' name='oldCatId' value='".$catID[0][0]."' />
+				<input type='submit' value='Oppdater' id='button' />	
+			</form>";
+		echo $content2;		
+	}
+	
+	function updateItemQuantity($itemID) {
+		$content = "<form action='?item=updatesend' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Antall:</td><td><input type='number' min='0' name='quantity' style='width: 50px;' /></td></tr>
+				</table>
+				<input type='hidden' name ='itemid' value='".$itemID."' /> 
+				<input type='submit' value='Legg til' id='button' />
+			</form>";
+		echo $content;
 	}
 	
 		//Brukere skal kunne legge til ordre.
@@ -108,6 +173,18 @@ class View {
 
 
 //§§§§§§§§§§§§§§§§§§§§§§§§§§ OUTPUT §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+	
+	/* Funksjon som tar imot om sorteringsrekkefølge på outputen og
+	 * om kunden er markert som aktiv eller ikke.
+	 *
+	 * Returns:
+	 * Tabell med alle aktive eller inaktive brukere.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 * $active = '1';
+	 *
+	 */	 
 	function ShowUsers($order, $active) {
 		// Opprett kobling mot databasen og hent users.
 		$db = new Database;
@@ -145,18 +222,18 @@ class View {
 		echo "</table>";
 	}
 	
-		//Viser oversikt over ordre til enten bruker eller admin/medarbeider.
-			// sender -> return: true=bruker, false=medarbeider/admin.
-		//Bruker: Skal vise alle ordre som er under godkjenning og ikke sendt av aktuell bruker
-		//Admin/Medarb. Viser alle ordre fra brukere som ikke er godkjent
-		//FLAGG forteller bruker eller AD/MED. hvilke varer som er ubehandlet. Eks "U";
 	
-	
-		//Admin og medarbeider skal kunne se hvem som er admin og medarbeider.
-			//Skal gjøre slik at du sender inn hvilken rekkerefølge du vil at navnene skal vises.
-			//Skal også få lagt inn handliger som f.eks slett bak hver bruker.
-			//Må man opprette kobling til databasen i hver function eller kan dette gjøres globalt?
-			//Skal legge inn slik at man ikke får opp handlingsfunksjoner hvis man kun er medarbeider.
+	/* Funksjon som tar imot om sorteringsrekkefølge på outputen og
+	 * om medarbeideren er markert som aktiv eller ikke.
+	 *
+	 * Returns:
+	 * Tabell med alle aktive eller inaktive medarbeidere.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 * $active = '1';
+	 *
+	 */	 
 	function showManagers($order, $active) {
 		// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
@@ -198,6 +275,7 @@ class View {
 	
 	
 	function ShowNewOrders() {
+		
 	
 	}
 	
@@ -207,6 +285,60 @@ class View {
 			//for alle bruker som er registrert.
 	function ShowOldOrders() {
 		
+	}
+	
+	function showCategories($order) {
+	// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sql = "SELECT * FROM  `category` ".$order;
+		$sth = $db->dbQuery($sql);
+		
+		$gui = new webShopGui;
+		$category = $gui::orderLink("sortByCategory", "name", "Kategori");
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td id='name'>".$category."</td><td>Beskrivelse</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) { 
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			// Skriv ut rader.
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td><a href='?edit=".$row['catID']."'>Rediger</a></td></tr>", "\n";
+			}
+		
+		// Avslutt tabell
+		echo "</table>";
+	}
+	
+	function showItems($order) {
+	// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sql = "SELECT * FROM  `item` ".$order;
+		$sth = $db->dbQuery($sql);
+		
+		$gui = new webShopGui;
+		$item = $gui::orderLink("sortByItem", "name", "Vare");
+		$quantity = $gui::orderLink("sortByItem", "quantity", "Antall");
+		$price = $gui::orderLink("sortByItem", "price", "Pris");
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td id='name'>".$item."</td><td>Beskrivelse</td><td>Kategori</td><td>".$quantity."</td><td>".$price."</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) { 
+			$sql = "SELECT * FROM  `categories` WHERE `itemID` = '".$row['itemID']."'";
+			$catId = $db->dbQuery($sql);
+			$sql = "SELECT * FROM  `category` WHERE `catID` = '".$catId[0][0]."'";
+			$cat = $db->dbQuery($sql);
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			// Skriv ut rader.
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['desc']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?edit=".$row['itemID']."&update=quantity'>Varemottak</a> | <a href='?edit=".$row['itemID']."'>Rediger</a></td></tr>", "\n";
+			}
+		
+		// Avslutt tabell
+		echo "</table>";
 	}
 
 

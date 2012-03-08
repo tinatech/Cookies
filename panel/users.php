@@ -86,7 +86,7 @@ echo $gui::secondmenu("users");
 			}
 		}
 		// Skriver ut skjema for innfylling av ny bruker.
-		elseif (isset($_GET['new']) == "user") {
+		elseif (isset($_GET['user']) && $_GET['user'] == "new") {
 			$gui::h2("Legg til ny medarbeider");
 			$view::NewAdminTable();
 		}
