@@ -15,8 +15,6 @@ define('LIBDIR', ROOTDIR . $lib);
 define('IMGDIR', ROOTDIR . $img);
 define('CSSDIR', $style);
 
-
-
 // Load gui class
 include_once (LIBDIR . "webshopgui.php");
 $gui = new WebshopGui;

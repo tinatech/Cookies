@@ -222,25 +222,22 @@ class View {
 				//Database-klassen som sjekker om bruker eller passord er gyldig
 					//og Database-klassen sender true eller false tilbake til validering
 					//og validering gir beskjed om login lykkes eller ei.
-	function UserLogin() {
-	
+	function showLogin() {
+		$form = '
+			<div id="login">
+				<form action="login.php" method="post">
+					<label for="username">Brukernavn: </label>
+					<input type="text" name="username" maxlength="20"/><br/>
+					<label for="password">Passord: </label>
+					<input type="text" name="password" maxlength="20"/><br/>
+					<input type="submit" name="submit" value="Login"/>
+				</form>
+			</div>';
+
+		echo $form;	
 	}
 	
 		//Samme som over
-	function AdminLogin() {
-	
-	}
-	
-		//Samme som over
-		//SPØRSMÅLET ER OM DET FAKTISK SKAL VÆRE 3 SKJEMAER FOR INNLOGGING??
-			//Tenker kanskje at det bare er login for bruker, link til ny bruker og 
-				//link til administrasjon der man kan logge inn som admin eller medarbeider.
-			//Det skal ikke være mulig å registrere admin eller medarbeider med mindre man
-				//er logget inn som admin. Vi lager en hovedadmin i MySQL query for å lage en admin
-				//som ikke kan slettes.
-	function EmployeeLogin() {
-	
-	}
 	
 	
 //¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ MISC ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤	
