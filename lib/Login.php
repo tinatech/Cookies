@@ -14,10 +14,10 @@ require_once(LIBDIR . "DB.php");
 
 class Login{
 
-	private $user;
-	private $pass;
+	$username;
+	$password;
 	$db_link;
-	private $auth = 0;
+	$auth = 0;
 
 	function __construct () {
 		
@@ -46,19 +46,24 @@ class Login{
 	}
 
 	public function verifyLogin ($username,$password) {
-		$sql = "SELECT * FROM user WHERE username='$password'
-			and password='md5($password)'";
-
-		if ($db_link->dbQueryExists($sql)) {
-			$_SESSION['auth'] = '1';
-			$_SESSION['username'] = $username;
-			echo $_SESSION['auth'];
-			echo $_SESSION['username'];
+		$this->username = $username;
+		if (empty($username) || empty($password)) {
+			/*make exeption*/
+			echo "Error";
 		} else {
-			echo "<p>Login Failed!</p>";
-		}
+			$sql = "SELECT * FROM user WHERE username='$password'
+				AND password='md5($password)' LIMIT 0,1";
+
+			if ($db_link->dbQueryExists($sql)) {
+				$_SESSION['auth'] = '1';
+				$_SESSION['username'] = $username;
+				echo $_SESSION['auth'];
+				echo $_SESSION['username'];
 		
+			}
+		}
 	}
+
 
 	public function logout () {
 		session_destroy();

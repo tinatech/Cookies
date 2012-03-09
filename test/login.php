@@ -7,9 +7,11 @@
 		header("Location: index.php");
 		exit;
 	} else {
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 		echo "Login";	
 		$login = new Login();
-		$login->verifyLogin($_POST['username'], $_POST['password']);
+		$login->verifyLogin($username, $password);
 	}
 
 ?>
