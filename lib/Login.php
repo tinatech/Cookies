@@ -19,9 +19,9 @@ class Login{
 	private $auth = NULL;
 	private $id = NULL;
 	private $dbconn = NULL;
+	private $admin = NULL;
 
 	public function __construct () {
-		
 		if(!isSet($_SESSION['auth']))
 			$_SESSION['auth'] = 0;
 
@@ -45,7 +45,7 @@ class Login{
 				username = '$user' AND password = '$pass' AND active=1 LIMIT 0,1"; 
 			
 			if ( $this->dbconn->dbQueryExist($sql) ) {
-				$this->setUserData($sql);
+				$this->setUserData($sql,'1');
 				$this->sessionInit("admin");	
 			
 			} else {
@@ -92,6 +92,7 @@ class Login{
 			$_SESSION['aID'] = $this->id;
 			$_SESSION['auth'] = 1;
 			$_SESSION['username'] = $this->user;
+			$_SESSION['admin'] = $this->admin;
 			header("Location: index.php");
 			break;
 		case "user":
@@ -108,12 +109,17 @@ class Login{
 	/*
 	 * Sets the userdata in session
 	 */
-	private function setUserData($sql) {
+	private function setUserData($sql,$a) {
 		$data = $this->dbconn->dbQuery($sql);
 		$this->id = $data[0][0];
+		if($a) $this->admin = $data[0][6];
 	}
 
-	
+	public function isAdmin() {
+		if($this->admin)
+			return true;
+	}	
+
 	public function getUsername() {
   		return $this->user;
  	}
@@ -121,10 +127,7 @@ class Login{
 
 	public function logout () {
 		session_destroy();
-	}
-
-	public function isAuth() {
-		return $this->authenticated;
+		header("Location: index.php");
 	}
 
 }
