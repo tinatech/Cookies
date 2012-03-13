@@ -39,7 +39,7 @@ class Database {
 				$insertData = "INSERT INTO zipcodes 
 									(zipcode, city) 
 									VALUES ('$temp[0]', '$temp[1]')";
-			
+				echo "Inserting $temp[0] , $temp[1] <br>";	
 				mysql_query ($insertData) or die (mysql_error());
 			}
 		return false;

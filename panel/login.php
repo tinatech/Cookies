@@ -1,5 +1,4 @@
 <?php
-require_once(CONFDIR . 'config.php');
 /**
  * Login processing for employee portal
  * This is the engine that process login requests for the admin panel
@@ -11,22 +10,40 @@ require_once(CONFDIR . 'config.php');
  *
  */
 
+require("../loadenv.php");
+require(LIBDIR . "Login.php");
+include "../functions.php";
+session_start();
+
+
 // if DEBUG is true, show output
-if (DEBUG) echo "[i] Processing login <br>";
+if (DEBUG) { 
+	echo "[i] Processing login <br> [i] Debug enabled.. <br>";
+}
 
+/* if a formsubmit is active create a Login */
+if ($_POST['submit']) {
+	if (DEBUG) {
+		echo "[i] Submitted <br> ";
+		echo "Username: " . $_POST['username'] . '<br>';
+		echo "Password: " . $_POST['password'];
+	}
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 
-/* if page is not called from login form
- * send the user back to index.php */
+	$login = new Login();
+	$login->adminLogin($username, $password);
+}
 
-if (!isSet($_POST['submit'])) {
+else if($_SESSION['auth'] == 1 && isSet($_SESSION['aID'])) {
+
 	header("Location: index.php");
-	exit;
+
+} else {
+
+	/* if page is not called from login form
+ 	* send the user back to index.php */
+	echo $gui::login("Login");
+	echo $gui::loginForm();
 }
-else {
-	/* TODO: create login*/
-}
-
-
-
-
 ?>

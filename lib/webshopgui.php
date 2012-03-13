@@ -36,7 +36,29 @@ class webShopGui {
 		
 		return $content;
 	}
+
+	function login($name) {
 	
+		$content = '<!DOCTYPE html>
+					<html>
+					<head>
+						<title>'.$name.'</title>
+						<link rel="stylesheet" type="text/css" href="' . CSSDIR . 'style.css' .'" />
+						<meta charset="utf-8" />
+					</head>
+					<body>
+
+					<!-- Start Wrapper -->
+					<div id="wrapper">
+
+					<header>
+						<div id="webshopname"><h1>'.$name.'</h1></div>
+					</header>';
+		
+		return $content;
+	}
+	
+
 	function h2($name) {
 		echo "<h2>".$name."</h2>";
 		}
@@ -221,7 +243,31 @@ class webShopGui {
 		return $output;
 			
 	}
-	
+	/*
+	 * Loginform
+	 * type = user || admin
+	 *
+	 */
+	function loginForm () {
+		$content = '
+			<div id="loginform">
+			<table>
+			<form action="" method="post">
+				<tr>
+					<td><label for="username">Brukernavn:</td>
+					<td><input type="text" max="20" name="username"></td>
+				</tr><tr>
+					<td><label for="password">Passord:</td> 
+					<td><input type="password" name="password"></td>
+				</tr><tr>
+					<td><input type="submit" name="submit" value="Logg inn"></td>
+				</tr>
+			</form>
+			</table>
+			</div>
+			';
+		return $content;
+	}
 	
 	
 }

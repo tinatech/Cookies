@@ -4,7 +4,7 @@ include_once ('database.php');
 
 
 $db = new Database();
-
+echo "Populating table zipcodes";
 if ($postLagret = $db->finnesPostnr()) {
 	echo "Det finnes allerede data i tabellen zipcodes";
 }

@@ -1,6 +1,9 @@
+DROP DATABASE Webshop;
+CREATE DATABASE Webshop;
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET NAMES 'utf8';
 
 DROP SCHEMA IF EXISTS `Webshop` ;
 CREATE SCHEMA IF NOT EXISTS `Webshop` DEFAULT CHARACTER SET utf8 ;
@@ -30,8 +33,8 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`user` (
   `sname` VARCHAR(45) NOT NULL ,
   `address` VARCHAR(45) NOT NULL ,
   `zipcode` INT NOT NULL ,
-  `email` VARCHAR(45) NOT NULL ,
-  `username` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) UNIQUE NOT NULL ,
+  `username` VARCHAR(45) UNIQUE NOT NULL ,
   `password` CHAR(32) NOT NULL ,
   `active` BOOLEAN default 1, 
   PRIMARY KEY (`uID`) ,
@@ -54,8 +57,8 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`worker` (
   `aID` INT NOT NULL AUTO_INCREMENT ,
   `fname` VARCHAR(45) NOT NULL ,
   `sname` VARCHAR(45) NOT NULL ,
-  `email` VARCHAR(45) NOT NULL ,
-  `username` VARCHAR(10) NOT NULL ,
+  `email` VARCHAR(45) UNIQUE NOT NULL ,
+  `username` VARCHAR(10) UNIQUE NOT NULL ,
   `password` CHAR(32) NOT NULL ,
   `admin` BOOLEAN NULL ,
   `active` BOOLEAN default 1, 
@@ -237,12 +240,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO worker (aID, fname, sname, email, username, password, admin) VALUES (
 	"0" , "Default admin" , "Default admin" , "admin@localhost" , "admin" , md5('admin'), '1');
 
+-- DEFAULT CATEGORY
 INSERT INTO category (catID, name, descr) VALUES (
 	"0", "uncategorized", "default category");
-
-
-
-
-
-
 

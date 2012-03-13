@@ -107,13 +107,6 @@ class Database {
 
 		return $result;
 	}
-
-	/* Function that inserts stuff into the database */
-
-	function dbInsert ($sql) {
-		/* TODO: Write a PDO compliant INSERT function */
-	}
-
 	
 }
 //end-Class-Database

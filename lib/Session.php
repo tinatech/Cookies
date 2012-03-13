@@ -31,7 +31,5 @@ class Session {
 	function setSortBy($session, $row, $order) {
 		$_SESSION[''.$session.''] = 'ORDER BY `'.$row.'` '.$order;
 		}
-		
-	
-	
+			
 }
