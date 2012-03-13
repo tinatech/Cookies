@@ -22,8 +22,6 @@ class Login{
 
 	public function __construct () {
 		
-		session_start();
-		
 		if(!isSet($_SESSION['auth']))
 			$_SESSION['auth'] = 0;
 
@@ -36,23 +34,21 @@ class Login{
 	 * Handles logins to adminpanel
 	 */
 	public function adminLogin($username,$password) {
-		if (DEBUG) echo '[i] adminLogin () <br>';
+		
 		if (empty($username) || empty($password)) {
 			throw new Exception("Empty username or password");
 		} else {
-			if (DEBUG) echo '[i] select <br>';
+
 			$user = $username;
 			$pass = md5($password);
 			$sql = "SELECT * FROM worker WHERE 
 				username = '$user' AND password = '$pass' AND active=1 LIMIT 0,1"; 
 			
 			if ( $this->dbconn->dbQueryExist($sql) ) {
-				echo "DO LOGIN";
 				$this->setUserData($sql);
 				$this->sessionInit("admin");	
 			
 			} else {
-				echo "LOGIN FAILED";
 				header("Location: index.php");
 			}
 
@@ -95,7 +91,7 @@ class Login{
 			session_regenerate_id();
 			$_SESSION['aID'] = $this->id;
 			$_SESSION['auth'] = 1;
-			$_SESSION['username'] = $user;
+			$_SESSION['username'] = $this->user;
 			header("Location: index.php");
 			break;
 		case "user":
