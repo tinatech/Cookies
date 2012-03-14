@@ -4,10 +4,6 @@ echo $gui::secondmenu("orders");
 ?>
 <div id="content">
 	<div id="mainbar">
-<<<<<<< HEAD
-		<h2>Ubehandlede ordrer:</h2>
-	</div><!-- End mainbar -->
-=======
 		<?php
 		if(isset($_GET['status']) && $_GET['status'] == "1") {
 			$gui::h2("Ordre under behandling");
@@ -27,8 +23,6 @@ echo $gui::secondmenu("orders");
 		}
 		?>
 	</div><!-- End mainbar -->	
->>>>>>> e53bccab9949142d4fd9f02b4dcef8ea21d4f621
-	
 </div><!-- End content -->
 
 <?php
