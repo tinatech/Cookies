@@ -40,6 +40,7 @@ class Database {
 									(zipcode, city) 
 									VALUES ('$temp[0]', '$temp[1]')";
 				echo "Inserting $temp[0] , $temp[1] <br>";	
+				mysql_query("set names utf8;");
 				mysql_query ($insertData) or die (mysql_error());
 			}
 		return false;

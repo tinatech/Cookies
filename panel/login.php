@@ -9,25 +9,18 @@
  * @version 0.1b
  *
  */
-
+session_start();
 require("../loadenv.php");
 require(LIBDIR . "Login.php");
 include "../functions.php";
-session_start();
 
 
-// if DEBUG is true, show output
-if (DEBUG) { 
-	echo "[i] Processing login <br> [i] Debug enabled.. <br>";
-}
+
+
 
 /* if a formsubmit is active create a Login */
-if ($_POST['submit']) {
-	if (DEBUG) {
-		echo "[i] Submitted <br> ";
-		echo "Username: " . $_POST['username'] . '<br>';
-		echo "Password: " . $_POST['password'];
-	}
+if (isset($_POST['submit']) && $_POST['submit']) {
+
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
@@ -35,7 +28,7 @@ if ($_POST['submit']) {
 	$login->adminLogin($username, $password);
 }
 
-else if($_SESSION['auth'] == 1 && isSet($_SESSION['aID'])) {
+else if(isset($_SESSION['auth']) && $_SESSION['auth'] == 1 && isSet($_SESSION['aID'])) {
 
 	header("Location: index.php");
 

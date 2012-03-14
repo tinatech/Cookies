@@ -5,15 +5,16 @@
  * Loads and defines enviroment variables
  */
 
-/* Set root directory and load config */
-define('ROOTDIR', dirname(__FILE__) . '/');
-define('CONFDIR', ROOTDIR . 'conf/');
+/* Set global paths */
+if ( !defined(ROOTDIR)) { define('ROOTDIR', $_SERVER['DOCUMENT_ROOT']  . '/'     ); }
+if ( !defined(CONFDIR)) { define('CONFDIR', $_SERVER['DOCUMENT_ROOT']  . '/conf/'); }
+if ( !defined(LIBDIR )) { define('LIBDIR' , $_SERVER['DOCUMENT_ROOT']  . '/lib/' ); }
+if ( !defined(IMGDIR )) { define('IMGDIR' , $_SERVER['DOCUMENT_ROOT']  . '/img/' ); }
+if ( !defined(CSSDIR )) { define('CSSDIR' , './css/'); }
+
+
 require(CONFDIR . "config.php");
 
-
-define('LIBDIR', ROOTDIR . $lib);
-define('IMGDIR', ROOTDIR . $img);
-define('CSSDIR', $style);
 
 // Load gui class
 include_once (LIBDIR . "webshopgui.php");

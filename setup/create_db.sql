@@ -121,15 +121,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Webshop`.`order`
+-- Table `Webshop`.`ordr`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Webshop`.`order` ;
+DROP TABLE IF EXISTS `Webshop`.`ordr` ;
 
-CREATE  TABLE IF NOT EXISTS `Webshop`.`order` (
+CREATE  TABLE IF NOT EXISTS `Webshop`.`ordr` (
   `orderID` INT NOT NULL AUTO_INCREMENT ,
   `uid` INT NULL ,
   `status` INT(1) NULL ,
   `time` DATETIME NOT NULL ,
+  `pby` INT ,
   PRIMARY KEY (`orderID`) ,
   INDEX `FK_order_uid` (`uid` ASC) ,
   CONSTRAINT `FK_order_uid`
@@ -157,7 +158,7 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`orders` (
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_orders_orderID`
     FOREIGN KEY (`orderID` )
-    REFERENCES `Webshop`.`order` (`orderID` )
+    REFERENCES `Webshop`.`ordr` (`orderID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -172,6 +173,8 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`orderlines` (
   `orderLineID` INT NOT NULL AUTO_INCREMENT ,
   `itemID` INT NULL ,
   `orderID` INT NULL ,
+  `price` INT NULL,
+  `quantity` INT NULL,
   INDEX `FK_orderlines_Itemid` (`itemID` ASC) ,
   INDEX `FK_orderlines_orderID` (`orderID` ASC) ,
   PRIMARY KEY (`orderLineID`) ,
@@ -182,7 +185,7 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`orderlines` (
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_orderlines_orderID`
     FOREIGN KEY (`orderID` )
-    REFERENCES `Webshop`.`order` (`orderID` )
+    REFERENCES `Webshop`.`ordr` (`orderID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

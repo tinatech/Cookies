@@ -8,7 +8,8 @@
  *
  */
 
-require_once("../loadenv.php");
+//require_once("../loadenv.php");   //Removed because of load issues, set in config.php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/loadenv.php");
 include(CONFDIR . "config.php");
 require_once(LIBDIR . "DB.php");
 
@@ -19,11 +20,9 @@ class Login{
 	private $auth = NULL;
 	private $id = NULL;
 	private $dbconn = NULL;
+	private $admin = NULL;
 
 	public function __construct () {
-		
-		session_start();
-		
 		if(!isSet($_SESSION['auth']))
 			$_SESSION['auth'] = 0;
 
@@ -36,23 +35,21 @@ class Login{
 	 * Handles logins to adminpanel
 	 */
 	public function adminLogin($username,$password) {
-		if (DEBUG) echo '[i] adminLogin () <br>';
+		
 		if (empty($username) || empty($password)) {
 			throw new Exception("Empty username or password");
 		} else {
-			if (DEBUG) echo '[i] select <br>';
+
 			$user = $username;
 			$pass = md5($password);
 			$sql = "SELECT * FROM worker WHERE 
 				username = '$user' AND password = '$pass' AND active=1 LIMIT 0,1"; 
 			
 			if ( $this->dbconn->dbQueryExist($sql) ) {
-				echo "DO LOGIN";
-				$this->setUserData($sql);
+				$this->setUserData($sql,'1');
 				$this->sessionInit("admin");	
 			
 			} else {
-				echo "LOGIN FAILED";
 				header("Location: index.php");
 			}
 
@@ -95,7 +92,8 @@ class Login{
 			session_regenerate_id();
 			$_SESSION['aID'] = $this->id;
 			$_SESSION['auth'] = 1;
-			$_SESSION['username'] = $user;
+			$_SESSION['username'] = $this->user;
+			$_SESSION['admin'] = $this->admin;
 			header("Location: index.php");
 			break;
 		case "user":
@@ -112,12 +110,17 @@ class Login{
 	/*
 	 * Sets the userdata in session
 	 */
-	private function setUserData($sql) {
+	private function setUserData($sql,$a) {
 		$data = $this->dbconn->dbQuery($sql);
 		$this->id = $data[0][0];
+		if($a) $this->admin = $data[0][6];
 	}
 
-	
+	public function isAdmin() {
+		if($this->admin)
+			return true;
+	}	
+
 	public function getUsername() {
   		return $this->user;
  	}
@@ -125,10 +128,7 @@ class Login{
 
 	public function logout () {
 		session_destroy();
-	}
-
-	public function isAuth() {
-		return $this->authenticated;
+		header("Location: index.php");
 	}
 
 }

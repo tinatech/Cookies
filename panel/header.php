@@ -9,7 +9,7 @@ include "../lib/Session.php";
  * Check if user is logged in to admin panel
  * If not logged in, send to login.php 
  */
-if(($_SESSION['auth'] == 1 && isSet($_SESSION['aID']))) {
+if(isset($_SESSION['auth']) && $_SESSION['auth'] == 1 && isSet($_SESSION['aID'])) {
 	
 	// Load session class
 	$session = new Session;

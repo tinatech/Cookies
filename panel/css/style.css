@@ -18,6 +18,15 @@
 	margin-bottom: 10px;
 	}
 
+#infobox {
+	background-color: orange;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}
+
 #new table input {
 	width: 200px;
 	border: 1px solid #5e5e5e;
@@ -57,3 +66,65 @@ table td {
 #overskrift #name { width: 230px; }
 #overskrift #adminstatus { width: 150px; }
 #overskrift #username { width: 150px; }
+
+.login {
+	margin:0 auto;
+	width:400px;
+	padding:14px;
+}
+	#loginform fieldset {
+		border: 1px solid #0E7FE3;
+		width: 200px;
+	}
+
+	#loginform legend {
+		color: #fff;
+		background: #0E7FE3;
+		border: 1px solid #0E7FE3;
+		padding: 2px 6px;
+		text-align: right;
+	}
+	
+	#loginform label{
+		display:block;
+		font-weight:bold;
+		text-align:left;
+		width:200px;
+		float:left;
+	}
+	#loginform input{
+		float:left;
+		border:solid 1px #aacfe4;
+		width:200px;
+	}
+
+#status0, #status1, #status2 {
+	width: 35px; 
+	height: 10px; 
+	display: block;
+}
+
+#status0 {
+	background-color: red;
+}
+
+#status1 {
+	background-color: yellow;
+}
+
+#status2 {
+	background-color: green;
+}
+
+.orderbutton {
+	height: 34px;
+	background-color: #0E7FE3;
+	margin-top: 10px;
+	margin-left: -5px;
+	padding-left: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	display: block;
+	line-height: 34px;
+	}

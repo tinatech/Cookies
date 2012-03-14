@@ -14,7 +14,7 @@
  * @version 0.1b
 */
 
-require_once CONFDIR.'dbconf.php';
+require_once(CONFDIR.'dbconf.php');
 
 class Database {
 		
@@ -108,6 +108,116 @@ class Database {
 		return $result;
 	}
 	
+//¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ INPUT ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+	
+		// **Ny medarbeider
+	function NewWorker($input) {
+		$sql ='INSERT INTO worker (aID, fname, sname, email, username, password, admin, active) 
+				  VALUES (0, ?, ?, ?, ?, ?, ?, ?)';
+			
+		$sth = Database::$this->DB->prepare($sql);
+			
+			//Setter inn data
+		$arr = array(
+			$_POST['fname']	,
+			$_POST['sname']	,
+			$_POST['email']	,
+			$_POST['username']	,
+			$_POST['password'] ,
+			$_POST['admin'],
+			$_POST['active']
+		);
+		
+		$sth->execute($arr);
+			
+			// Fjerner variabel fra minnet
+		unset ($sql);
+		unset ($arr);
+	}
+	
+	function NewUser ($input) {
+		$sql = 'INSERT INTO user (uID, fname, sname, address, zipcode, email, username, password, active)
+					VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?)';
+					
+		$sth = Database::$this->DB->prepare($sql);
+		
+		$arr = array(
+			$_POST['fname'] ,
+			$_POST['sname'] ,
+			$_POST['address'] ,
+			$_POST['zipcode'] ,
+			$_POST['email'] ,
+			$_POST['username'] ,
+			$_POST['password'] ,
+			$_POST['active']
+		);
+		
+		$sth->execute($arr);
+		
+		unset ($sql);
+		unset ($arr);
+	}
+	
+	function NewItem ($input) {
+				
+		$sql = 'INSERT INTO item (itemID, name, quantity, descr, price, image) 
+					VALUES (0, ?, ?, ?, ?, ?)';
+
+		$sth = Database::$this->DB->prepare($sql);
+		
+		$arr = array(
+			$_POST['name'] ,
+			$_POST['quantity'] ,
+			$_POST['descr'] ,
+			$_POST['price'] ,
+				// Vet ikke helt hvordan image(blob) sendes med til databasen
+			$_POST['image']
+		);
+		
+		$sth->execute($arr);
+		
+		unset ($sql);
+		unset ($arr);	
+	}
+	
+	
+	function NewCategory ($input) {
+		
+		$sql = 'INSERT INTO category (catID, name, descr)
+					VALUES (0, ?, ?)';
+					
+		$sth = Database::$this->DB->prepare($sql);
+		
+		$arr = array( 
+			$_POST['name'] ,
+			$_POST['descr']
+		);
+		
+		$sth->execute($arr);
+		
+		unset ($sql);
+		unset ($arr);
+	}
+
+	
+	function NewOrder ($input) {
+	
+		$sql = 'INSERT INTO ordr (orderID, uid, status, time)
+					VALUES (0, ?, ?, NOW())';
+	
+		$sth = Database::$this->DB->prepare($sql);
+		
+		$arr = array(
+			$_POST['uid'] ,
+			$_POST['status']
+		);
+		
+		$sth->execute($arr);
+		
+		unset($sql);
+		unset($arr);
+	}
+
 }
 //end-Class-Database
 
