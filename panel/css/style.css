@@ -18,6 +18,15 @@
 	margin-bottom: 10px;
 	}
 
+#infobox {
+	background-color: orange;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}
+
 #new table input {
 	width: 200px;
 	border: 1px solid #5e5e5e;
@@ -106,3 +115,16 @@ table td {
 #status2 {
 	background-color: green;
 }
+
+.orderbutton {
+	height: 34px;
+	background-color: #0E7FE3;
+	margin-top: 10px;
+	margin-left: -5px;
+	padding-left: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	display: block;
+	line-height: 34px;
+	}

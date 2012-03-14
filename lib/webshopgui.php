@@ -222,6 +222,10 @@ class webShopGui {
 		echo $content;
 	}
 	
+	function infobox($text) {
+		$content = '<div id="infobox">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'verified\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
+		echo $content;
+	}
 	
 //**************************************//
 //				LINKS					//

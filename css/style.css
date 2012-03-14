@@ -214,3 +214,26 @@ MENY
 	color: #000;
 	}
 	
+#verified {
+	background-color: green;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}
+	
+#error {
+	background-color: red;
+	width: 970px;
+	padding: 5px; 
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	}
+
+#new table input {
+	width: 200px;
+	border: 1px solid #5e5e5e;
+	}
+	
