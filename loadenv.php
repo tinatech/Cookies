@@ -6,11 +6,11 @@
  */
 
 /* Set global paths */
-if ( !defined(ROOTDIR)) { define('ROOTDIR', $_SERVER['DOCUMENT_ROOT']  . '/'     ); }
-if ( !defined(CONFDIR)) { define('CONFDIR', $_SERVER['DOCUMENT_ROOT']  . '/conf/'); }
-if ( !defined(LIBDIR )) { define('LIBDIR' , $_SERVER['DOCUMENT_ROOT']  . '/lib/' ); }
-if ( !defined(IMGDIR )) { define('IMGDIR' , $_SERVER['DOCUMENT_ROOT']  . '/img/' ); }
-if ( !defined(CSSDIR )) { define('CSSDIR' , './css/'); }
+if ( !defined('ROOTDIR')) { define('ROOTDIR', $_SERVER['DOCUMENT_ROOT']  . '/'     ); }
+if ( !defined('CONFDIR')) { define('CONFDIR', $_SERVER['DOCUMENT_ROOT']  . '/conf/'); }
+if ( !defined('LIBDIR' )) { define('LIBDIR' , $_SERVER['DOCUMENT_ROOT']  . '/lib/' ); }
+if ( !defined('IMGDIR' )) { define('IMGDIR' , $_SERVER['DOCUMENT_ROOT']  . '/img/' ); }
+if ( !defined('CSSDIR' )) { define('CSSDIR' , './css/'); }
 
 
 require(CONFDIR . "config.php");
