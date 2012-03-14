@@ -7,9 +7,25 @@ class View {
 //¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ INPUT ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 		//En temp. simpel mother-fucker som sjekker at konseptet fungerer faktisk.
 			//And it fucking does..
+			
+	//Registrer ny kunde i frontend		
 	function newUserTable() {
-
-		}
+		$content = 
+			"<form action='?user=send' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
+					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
+					<tr><td>Addresse:</td><td><input type='text' name='address' /></td></tr>
+					<tr><td>Postnummer:</td><td><input type='text' name='zipcode' /></td></tr>
+					<tr><td>Epost:</td><td><input type='email' name='email' /></td></tr>
+					<tr><td>Brukernavn:</td><td><input type='text' name='username' /></td></tr>
+					<tr><td>Nytt passord:</td><td><input type='password' name='password' /></td></tr>
+					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
+				</table>
+				<input type='submit' value='Registrer' id='button' />
+			</form>";
+		echo $content;	
+	}
 		
 	function editUserTable($input) {
 		$content = 
