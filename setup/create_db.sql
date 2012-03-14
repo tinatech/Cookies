@@ -172,6 +172,8 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`orderlines` (
   `orderLineID` INT NOT NULL AUTO_INCREMENT ,
   `itemID` INT NULL ,
   `orderID` INT NULL ,
+  `price` INT NULL,
+  `quantity` INT NULL,
   INDEX `FK_orderlines_Itemid` (`itemID` ASC) ,
   INDEX `FK_orderlines_orderID` (`orderID` ASC) ,
   PRIMARY KEY (`orderLineID`) ,
