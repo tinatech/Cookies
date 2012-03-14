@@ -7,9 +7,25 @@ class View {
 //§§§§§§§§§§§§§§§§§§§§§§§§§§§ INPUT §§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 		//En temp. simpel mother-fucker som sjekker at konseptet fungerer faktisk.
 			//And it fucking does..
+			
+	//Registrer ny kunde i frontend		
 	function newUserTable() {
-
-		}
+		$content = 
+			"<form action='?user=send' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Fornavn:</td><td><input type='text' name='fname' /></td></tr>
+					<tr><td>Etternavn:</td><td><input type='text' name='sname' /></td></tr>
+					<tr><td>Addresse:</td><td><input type='text' name='address' /></td></tr>
+					<tr><td>Postnummer:</td><td><input type='text' name='zipcode' /></td></tr>
+					<tr><td>Epost:</td><td><input type='email' name='email' /></td></tr>
+					<tr><td>Brukernavn:</td><td><input type='text' name='username' /></td></tr>
+					<tr><td>Nytt passord:</td><td><input type='password' name='password' /></td></tr>
+					<tr><td>Gjenta passord:</td><td><input type='password' name='password2' /></td></tr>
+				</table>
+				<input type='submit' value='Registrer' id='button' />
+			</form>";
+		echo $content;	
+	}
 		
 	function editUserTable($input) {
 		$content = 
@@ -390,17 +406,22 @@ class View {
 		echo $user[0][4]." ".$city[0][1]."<br /><br />", "\n";
 		
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
-		echo "<tr id=\"overskrift\"><td>OrdreID</td><td>Itemid</td></tr>", "\n";
+		echo "<tr id=\"overskrift\"><td>Vare</td><td>Antall</td><td>Enhetspris</td><td>Totalpris</td></tr>", "\n";
 		$rowCount = 0;
+		$totalprice = 0;
 		foreach($sth as $row) {
 			$sql = "SELECT * FROM  `item` WHERE `item`.`itemID` =".$row['itemID'];
 			$item = $db->dbQuery($sql);
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			$price = $row['quantity'] * $row['price'];
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			
-			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$item	[0][1]."</td></tr>", "\n";
+			echo "<tr".$even."><td>".$item[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td>".$price.",-</td></tr>", "\n";
+			
+			$totalprice = $totalprice + $price;
 		}
 		// Avslutt tabell
+		echo "<tr id=\"overskrift\"><td></td><td></td><td>Totalpris:</td><td>".$totalprice.",-</td></tr>";
 		echo "</table>";
 	}
 

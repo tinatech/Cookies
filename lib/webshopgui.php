@@ -30,8 +30,8 @@ class webShopGui {
 					<div id="wrapper">
 
 					<header>
-						<div id="webshopname"><h1>'.$name.'</h1></div>
-						<div id="userinfo"><a href="logout.php">Logg ut</a> | Registrer deg som kunde</div>
+						<div id="webshopname"><a href="index.php"><h1>'.$name.'</h1></a></div>
+						<div id="userinfo"><a href="logout.php">Logg ut</a> | <a href="register.php">Registrer deg som kunde</a></div>
 					</header>';
 		
 		return $content;
@@ -142,7 +142,7 @@ class webShopGui {
 			$db = new Database;
 			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =0";
 			$sth = $db->dbQuery($sql);
-			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =0";
+			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =1";
 			$sth2 = $db->dbQuery($sql2);
 			$number = count($sth);
 			$number2 = count($sth2);
