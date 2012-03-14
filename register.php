@@ -34,7 +34,7 @@ include_once("header.php");
 				$sql = "INSERT INTO `Webshop`.`user` (`uID`, `fname`, `sname`, `address`,`zipcode`,`email`, `username`, `password`) 
 						VALUES (NULL, '".$_POST['fname']."', '".$_POST['sname']."', '".$_POST['address']."', '".$_POST['zipcode']."', '".$_POST['email']."', '".$_POST['username']."', '".md5($_POST['password'])."')";
 				$db->dbQuery($sql);
-				
+			
 				echo "Du er registrert.";
 				
 		
