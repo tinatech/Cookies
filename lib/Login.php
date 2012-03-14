@@ -8,7 +8,8 @@
  *
  */
 
-require_once("../loadenv.php");
+//require_once("../loadenv.php");   //Removed because of load issues, set in config.php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/loadenv.php");
 include(CONFDIR . "config.php");
 require_once(LIBDIR . "DB.php");
 

@@ -14,7 +14,7 @@
  * @version 0.1b
 */
 
-require_once CONFDIR.'dbconf.php';
+require_once(CONFDIR.'dbconf.php');
 
 class Database {
 		
