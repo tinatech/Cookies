@@ -250,12 +250,18 @@ class View {
 		echo "<tr id=\"overskrift\"><td id='name'>".$name."</td><td id='adminstatus'>".$admin."</td><td id='username'>".$username."</td><td>E-post</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
+		
+		// Kun default admin kan redigere admin profilen. 
+		if ($_SESSION['aID'] == "1" || $row['aID'] != "1") {
 			if ($active == "0") {
-				$changestatus = "<a href='?user=".$row['aID']."&status=1'>Aktiver </a>";
+				$changestatus = "<a href='?user=".$row['aID']."&status=1'>Aktiver </a>| <a href='?edit=".$row['aID']."'>Rediger</a>";
 			}
 			else if ($active == "1") {
-				$changestatus = "<a href='?user=".$row['aID']."&status=0'>Deaktiver </a>";
+				$changestatus = "<a href='?user=".$row['aID']."&status=0'>Deaktiver </a>| <a href='?edit=".$row['aID']."'>Rediger</a>";
 			}
+		}
+		else { $changestatus = ""; }
+		
 			// Finn ut om det er admin eller ikke. Skriv admin eller medarbeider istedet for 1 eller 0
 			if ( $row['admin'] == 1 ){
 				$admin = "Admin";
@@ -266,26 +272,13 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."| <a href='?edit=".$row['aID']."'>Rediger</a></td></tr>", "\n";
+ 		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."</td></tr>", "\n";
 			}
 		
 		// Avslutt tabell
 		echo "</table>";
 	}
 	
-	
-	function ShowNewOrders() {
-		
-	
-	}
-	
-		//Oversikt over ordre til bruker eller alle ordre til alle brukere som er godkjent.
-			// sender -> return: true=behandlede ordre for bruker. false=alle ordre til bruker til ad/med..
-		//FLAGG forteller bruker om tidligere bestillinger eller admin/medar. om alle ordre som er godkjent 
-			//for alle bruker som er registrert.
-	function ShowOldOrders() {
-		
-	}
 	
 	function showCategories($order) {
 	// Opprett kobling mot databasen og hent workers.
@@ -301,10 +294,14 @@ class View {
 		echo "<tr id=\"overskrift\"><td id='name'>".$category."</td><td>Beskrivelse</td><td>Handlinger</td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
+			if($row['catID'] != '1') {
+				$edit = "<a href='?edit=".$row['catID']."'>Rediger</a>";
+			}
+			else { $edit = ""; }
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td><a href='?edit=".$row['catID']."'>Rediger</a></td></tr>", "\n";
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$edit."</td></tr>", "\n";
 			}
 		
 		// Avslutt tabell
@@ -340,7 +337,72 @@ class View {
 		// Avslutt tabell
 		echo "</table>";
 	}
+	
+	function showOrders($status, $order) {
+	// Opprett kobling mot databasen og hent order.
+		$db = new Database;
+		if($status == "all") {
+			$sql = "SELECT * FROM  `order` ".$order;
+		}
+		else {
+			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =".$status." ".$order;
+		}
+		$sth = $db->dbQuery($sql);
+		
+		
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td>OrdreID</td><td>Kundenavn</td><td>Status</td><td>Bestillingsdato</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) {
+			$sql = "SELECT * FROM  `user` WHERE `uID` =".$row['uid'];
+			$name = $db->dbQuery($sql);
+			
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			
+			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$name[0][2].", ".$name[0][1]."</td><td><span id='status".$row['status']."'></span></td><td>".$row['time']."</td><td><a href='order.php?order=".$row['orderID']."'>Se ordre</a> | <a href='#'>Slett</a></td></tr>", "\n";
+		}
+		// Avslutt tabell
+		echo "</table>";
+	}
 
+	function showOrder($orderid) {
+	// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sql = "SELECT * FROM  `orderlines` WHERE `orderlines`.`orderid` =".$orderid;
+		$sth = $db->dbQuery($sql);
+		
+		$sql = "SELECT * FROM  `order` WHERE `order`.`orderID` =".$orderid;
+		$order = $db->dbQuery($sql);
+		
+		$sql = "SELECT * FROM  `user` WHERE `user`.`uID` =".$order[0][1];
+		$user = $db->dbQuery($sql);
+		
+		$sql = "SELECT * FROM  `zipcodes` WHERE `zipcodes`.`zipcode` =".$user[0][4];
+		$city = $db->dbQuery($sql);
+		
+		// Skriv ut tabellstart
+		echo "<strong>Bestillingsadresse:</strong><br />";
+		echo $user[0][1]." ".$user[0][2]."<br />", "\n";
+		echo $user[0][3]."<br />", "\n";
+		echo $user[0][4]." ".$city[0][1]."<br /><br />", "\n";
+		
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td>OrdreID</td><td>Itemid</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) {
+			$sql = "SELECT * FROM  `item` WHERE `item`.`itemID` =".$row['itemID'];
+			$item = $db->dbQuery($sql);
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			
+			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$item	[0][1]."</td></tr>", "\n";
+		}
+		// Avslutt tabell
+		echo "</table>";
+	}
 
 //end-func's-output ---------------------------------------------------------------------
 
@@ -367,29 +429,6 @@ class View {
 			</div>';
 
 		echo $form;	
-	}
-	
-		//Samme som over
-	
-	
-//§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§ MISC §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§	
-	
-		//De ulike brukerene skal ha mulighet til Â drepe sessjonen de befinner seg i..
-	function LogOut() {
-	
-	}
-	
-//end-func's-MISC-----------------------------------------------------------------------------
-
-
-
-	//+ + + + + + En del mer + + + + + 
-
-	
-	
-		
+	}	
 }
-
-
-
 ?>

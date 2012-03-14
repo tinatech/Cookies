@@ -31,7 +31,7 @@ class webShopGui {
 
 					<header>
 						<div id="webshopname"><h1>'.$name.'</h1></div>
-						<div id="userinfo">Logg inn | Registrer deg som kunde</div>
+						<div id="userinfo"><a href="logout.php">Logg ut</a> | Registrer deg som kunde</div>
 					</header>';
 		
 		return $content;
@@ -139,10 +139,17 @@ class webShopGui {
 //**************************************//
 	function SecondMenu($menu) {
 		if($menu == "orders"){
-			$menu = '<a href="#"><li class="first">Ubehandlet (0)</li> </a>
-					 <a href="#"><li>Under behandling (0)</li> </a>
-					 <a href="#"><li>Ferdigbehandlet</li> </a>
-					 <a href="#"><li>Alle ordre</li> </a>';
+			$db = new Database;
+			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =0";
+			$sth = $db->dbQuery($sql);
+			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =0";
+			$sth2 = $db->dbQuery($sql2);
+			$number = count($sth);
+			$number2 = count($sth2);
+			$menu = '<a href="index.php"><li class="first">Ubehandlet ('.$number.')</li> </a>
+					 <a href="index.php?status=1"><li>Under behandling ('.$number2.')</li> </a>
+					 <a href="index.php?status=2"><li>Ferdigbehandlet</li> </a>
+					 <a href="index.php?status=all"><li>Alle ordre</li> </a>';
 		}
 		
 		elseif($menu == "products"){
