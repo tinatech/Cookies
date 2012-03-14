@@ -406,17 +406,22 @@ class View {
 		echo $user[0][4]." ".$city[0][1]."<br /><br />", "\n";
 		
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
-		echo "<tr id=\"overskrift\"><td>OrdreID</td><td>Itemid</td></tr>", "\n";
+		echo "<tr id=\"overskrift\"><td>Vare</td><td>Antall</td><td>Enhetspris</td><td>Totalpris</td></tr>", "\n";
 		$rowCount = 0;
+		$totalprice = 0;
 		foreach($sth as $row) {
 			$sql = "SELECT * FROM  `item` WHERE `item`.`itemID` =".$row['itemID'];
 			$item = $db->dbQuery($sql);
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			$price = $row['quantity'] * $row['price'];
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			
-			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$item	[0][1]."</td></tr>", "\n";
+			echo "<tr".$even."><td>".$item[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td>".$price.",-</td></tr>", "\n";
+			
+			$totalprice = $totalprice + $price;
 		}
 		// Avslutt tabell
+		echo "<tr id=\"overskrift\"><td></td><td></td><td>Totalpris:</td><td>".$totalprice.",-</td></tr>";
 		echo "</table>";
 	}
 

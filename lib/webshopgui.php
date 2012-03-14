@@ -142,7 +142,7 @@ class webShopGui {
 			$db = new Database;
 			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =0";
 			$sth = $db->dbQuery($sql);
-			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =0";
+			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =1";
 			$sth2 = $db->dbQuery($sql2);
 			$number = count($sth);
 			$number2 = count($sth2);
