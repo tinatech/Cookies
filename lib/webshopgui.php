@@ -30,8 +30,8 @@ class webShopGui {
 					<div id="wrapper">
 
 					<header>
-						<div id="webshopname"><h1>'.$name.'</h1></div>
-						<div id="userinfo"><a href="logout.php">Logg ut</a> | Registrer deg som kunde</div>
+						<div id="webshopname"><a href="index.php"><h1>'.$name.'</h1></a></div>
+						<div id="userinfo"><a href="logout.php">Logg ut</a> | <a href="register.php">Registrer deg som kunde</a></div>
 					</header>';
 		
 		return $content;
