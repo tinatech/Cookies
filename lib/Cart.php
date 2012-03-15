@@ -35,8 +35,8 @@ class Cart {
 	
 	}
 
-	function calcTotalPrice () {
-	
+	function setItemData($itemID, $key, $value) {
+		
 	}
 
 	function calcTotalItems () {
