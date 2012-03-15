@@ -141,9 +141,9 @@ class webShopGui {
 	function SecondMenu($menu) {
 		if($menu == "orders"){
 			$db = new Database;
-			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =0";
+			$sql = "SELECT * FROM  `ordr` WHERE `ordr`.`status` =0";
 			$sth = $db->dbQuery($sql);
-			$sql2 = "SELECT * FROM  `order` WHERE `order`.`status` =1";
+			$sql2 = "SELECT * FROM  `ordr` WHERE `ordr`.`status` =1";
 			$sth2 = $db->dbQuery($sql2);
 			$number = count($sth);
 			$number2 = count($sth2);
@@ -224,7 +224,7 @@ class webShopGui {
 	}
 	
 	function infobox($text) {
-		$content = '<div id="infobox">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'verified\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
+		$content = '<div id="infobox">'.$text.'<span style="float:right;"><a onclick="document.getElementById(\'infobox\').style.display=\'none\'"><img src="../images/x.png" alt="lukk" /></a></span></div>';
 		echo $content;
 	}
 	

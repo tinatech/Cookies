@@ -118,9 +118,7 @@ table td {
 
 .orderbutton {
 	height: 34px;
-	background-color: #0E7FE3;
 	margin-top: 10px;
-	margin-left: -5px;
 	padding-left: 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -128,3 +126,21 @@ table td {
 	display: block;
 	line-height: 34px;
 	}
+<<<<<<< HEAD
+=======
+
+a #unmark {
+	float: right;
+	width: 140px;
+	background-color: grey;
+	margin-right: 10px;
+	color: #fff;
+	}
+a #finish {
+		color: #fff;
+	float: right;
+	width: 100px;
+	background-color: green;
+	margin-right: -5px;
+	}
+>>>>>>> 528e3b7fc280a4084257376c507ab5894da8db10
