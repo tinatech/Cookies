@@ -10,9 +10,9 @@ require_once("header.php"); ?>
 	</div> <!--end sidebar-->
 
 	<div id="mainbar">
-		<h2>Omnomnom</h2>
-		<p>Welcome to the dark side, we have cookies... </p>
-		<p>- Petter, Christoffer, Kjetil og Tina</p>
+		<h2>The Dark Cookie Shop</h2>
+		<p>The Dark Cookie Shop ble opprettet i 2012 av 4 studenter som er glad i kaker. </p>
+		<p>- Petter W. Johnsgård, Christoffer Vargtass, Kjetil Høyme og Tina Haaskjold Behrens</p>
 	</div> <!-- End leftbar -->
 	
 

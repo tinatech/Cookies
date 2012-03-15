@@ -10,9 +10,12 @@ require_once("header.php"); ?>
 	</div> <!--end sidebar-->
 
 	<div id="mainbar">
-		<h2>Omnomnom</h2>
-		<p>Welcome to the dark side, we have cookies... </p>
-		<p>- Petter, Christoffer, Kjetil og Tina</p>
+		<h2>The Dark Cookie Shop</h2>
+		<p>Petter W. Johnsgård</p>
+		<p>Christoffer Vargtass</p>
+		<p>Kjetil Høyme</p>
+		<p>Tina Haaskjold Behrens</p>
+	
 	</div> <!-- End leftbar -->
 	
 
