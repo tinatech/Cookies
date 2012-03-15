@@ -342,3 +342,28 @@ table td {
 #status2 {
 	background-color: green;
 }
+.orderbutton {
+	height: 34px;
+	margin-top: 10px;
+	padding-left: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	display: block;
+	line-height: 34px;
+	}
+	
+a #finish {
+		color: #fff;
+	float: right;
+	width: 100px;
+	background-color: green;
+	margin-right: -5px;
+	}
+
+#finish2 {
+
+	float: right;
+
+	margin-right: -5px;
+	}

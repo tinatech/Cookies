@@ -2,9 +2,7 @@
 require_once("header.php"); ?>
 
 <div id="content">
-	<div id="sidebar"> <!--start sidebar-->	
-		<?php $gui::showCart(); ?>
-	</div> <!--end sidebar-->
+
 
 	<div id="mainbar">
 		<h2>Omnomnom</h2>

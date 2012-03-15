@@ -61,18 +61,7 @@
 
 
 
-.orderbutton {
-	height: 34px;
-	margin-top: 10px;
-	padding-left: 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;	
-	display: block;
-	line-height: 34px;
-	}
-<<<<<<< HEAD
-=======
+
 
 a #unmark {
 	float: right;
@@ -81,11 +70,3 @@ a #unmark {
 	margin-right: 10px;
 	color: #fff;
 	}
-a #finish {
-		color: #fff;
-	float: right;
-	width: 100px;
-	background-color: green;
-	margin-right: -5px;
-	}
->>>>>>> 528e3b7fc280a4084257376c507ab5894da8db10

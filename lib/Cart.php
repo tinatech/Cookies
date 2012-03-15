@@ -16,6 +16,10 @@ class Cart {
 	var $expire = 3600;
 	var $del_cookie = -1;
 
+	function __construct() {
+		if(!isset($_SESSION['cart'])) { $_SESSION['cart'] = array(); }
+	}
+
 	function addItem($itemID, $qty) {
 		$dbconn = new Database;
 		$sql = 'SELECT (price) FROM item WHERE itemID='.$itemID.' LIMIT 0,1';
