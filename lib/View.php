@@ -100,6 +100,20 @@ class View {
 		echo $content;	
 	}
 	
+	
+	function editCategoryTable($input) {
+		$content = 
+			"<form action='?edit=send' method='post' accept-charset='utf-8' id='new'>
+				<table>
+					<tr><td>Navn:</td><td><input type='text' name='name' value='".$input[0][1]."'/></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='textarea' name='descr' value='".$input[0][2]."'/></td></tr>
+				</table>
+				<input type='hidden' name='catid' value='".$input[0][0]."' />
+				<input type='submit' value='Oppdater' id='button' />	
+			</form>";
+		echo $content;	
+	}
+	
 		//Vises også hvis man er admin eller medarbeider
 		//Det skal IKKE være mulig å opprette en ny vare i en ukjent kategori
 	function NewItemTable() {

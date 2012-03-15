@@ -52,6 +52,24 @@ echo $gui::secondmenu("products");
 			$view::newCategoryTable();
 		}
 		
+		//*************** EDIT ***************//
+		// Skriver ut redigeringsskjema hvis $_GET['edit'] er satt og $_GET er et nummer.
+		elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
+			$sql = "SELECT * FROM `Webshop`.`category` WHERE `category`.`catID` = ".$_GET['edit'];
+			$result = $db->dbQuery($sql);
+			$gui::h2("Rediger kategori");
+			$view::editCategoryTable($result);
+		}
+		
+		// Skjekker om $_GET er satt og satt til send. Skjekker i tilegg om det det er sendt inn noe informasjon for å ikke få feilmeilding hvis det ikke er det.
+		elseif (isset($_GET['edit']) && $_GET['edit'] == "send" && isset($_POST['catid'])) {
+			$gui::h2("Kategorier");
+			$sql = "UPDATE  `Webshop`.`category` SET  `name` =  '".$_POST['name']."', `descr` =  '".$_POST['descr']."' WHERE  `category`.`catID` =".$_POST['catid'];
+			$db->dbQuery($sql);
+			$gui::verified($_POST['name']." ble oppdatert");
+			$view::showCategories($_SESSION['sortByCategory']);
+		}
+		
 		//*************** SHOW CATEGORIES ***************//
 		
 		else {
