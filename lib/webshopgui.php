@@ -32,7 +32,7 @@ class webShopGui {
 
 					<header>
 						<div id="webshopname"><a href="index.php"><h1>'.$name.'</h1></a></div>
-						<div id="userinfo">'.$loginStatus.' | '.$loginPanel.'</div>
+						<div id="userinfo">'.$loginStatus.' | '.$loginPanel.' | <a href="cart.php">Handlekurv ('.count($_SESSION['cart']).')</div>
 					</header>';
 		
 		return $content;
