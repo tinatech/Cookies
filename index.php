@@ -11,8 +11,7 @@ require_once("header.php"); ?>
 
 	<div id="mainbar">
 		<h2>Omnomnom</h2>
-		<p>Welcome to the dark side, we have cookies... </p>
-		<p>- Petter, Christoffer, Kjetil og Tina</p>
+		<p><img src="./images/ds_cookie.jpg"></img></p>
 	</div> <!-- End leftbar -->
 	
 
