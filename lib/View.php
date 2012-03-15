@@ -466,7 +466,7 @@ class View {
 		
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
-		echo "<tr id=\"overskrift\"><td id='name'>".$item."</td><td>Beskrivelse</td><td>Kategori</td><td>".$quantity."</td><td>".$price."</td><td></td></tr>", "\n";
+		echo "<tr id=\"overskrift\"><td style='width: 50px;'></td><td id='name'>".$item."</td><td>Beskrivelse</td><td>Kategori</td><td>".$quantity."</td><td>".$price."</td><td></td></tr>", "\n";
 		$rowCount = 0;
 		foreach($sth as $row) { 
 			$sql = "SELECT * FROM  `categories` WHERE `itemID` = '".$row['itemID']."'";
@@ -474,13 +474,15 @@ class View {
 			$sql = "SELECT * FROM  `category` WHERE `catID` = '".$catId[0][0]."'";
 			$cat = $db->dbQuery($sql);
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			$image = "";
+			if ($row['image'] != NULL) { $image = "<img src='data:image/jpeg;base64," . base64_encode( $row['image'] ) ."' class='itemimage' />"; }
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
  		   	if ($catnr != NULL && $catId[0][0] == $catnr) {
- 		   		echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
 			}
 			elseif ($catnr == NULL) {
- 		   		echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
 			}
 			}
 		
