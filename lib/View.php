@@ -358,10 +358,10 @@ class View {
 	// Opprett kobling mot databasen og hent order.
 		$db = new Database;
 		if($status == "all") {
-			$sql = "SELECT * FROM  `order` ".$order;
+			$sql = "SELECT * FROM  `ordr` ".$order;
 		}
 		else {
-			$sql = "SELECT * FROM  `order` WHERE `order`.`status` =".$status." ".$order;
+			$sql = "SELECT * FROM  `ordr` WHERE `ordr`.`status` =".$status." ".$order;
 		}
 		$sth = $db->dbQuery($sql);
 		
@@ -378,7 +378,7 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			
-			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$name[0][2].", ".$name[0][1]."</td><td><span id='status".$row['status']."'></span></td><td>".$row['time']."</td><td><a href='order.php?order=".$row['orderID']."'>Se ordre</a> | <a href='#'>Slett</a></td></tr>", "\n";
+			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$name[0][2].", ".$name[0][1]."</td><td><span id='status".$row['status']."'></span></td><td>".$row['time']."</td><td><a href='order.php?order=".$row['orderID']."'>Se ordre</a></td></tr>", "\n";
 		}
 		// Avslutt tabell
 		echo "</table>";
@@ -390,7 +390,8 @@ class View {
 		$sql = "SELECT * FROM  `orderlines` WHERE `orderlines`.`orderid` =".$orderid;
 		$sth = $db->dbQuery($sql);
 		
-		$sql = "SELECT * FROM  `order` WHERE `order`.`orderID` =".$orderid;
+		
+		$sql = "SELECT * FROM  `ordr` WHERE `ordr`.`orderID` =".$orderid;
 		$order = $db->dbQuery($sql);
 		
 		$sql = "SELECT * FROM  `user` WHERE `user`.`uID` =".$order[0][1];
@@ -423,6 +424,10 @@ class View {
 		// Avslutt tabell
 		echo "<tr id=\"overskrift\"><td></td><td></td><td>Totalpris:</td><td>".$totalprice.",-</td></tr>";
 		echo "</table>";
+		echo "<a href='?order=".$_GET['order']."&status=2'><span class='orderbutton' id='finish'>Behandlet ferdig</span></a><a href='?order=".$_GET['order']."&status=0'><span class='orderbutton' id='unmark'>Marker som ubehandlet</span></a>";
+		$sql = "SELECT * FROM `worker` WHERE `worker`.`aID` =".$order[0][4];
+		$aID = $db->dbQuery($sql);
+		echo "<span class='orderbutton' style='margin-left: -10px'><strong>Ordrebehandler:</strong> ".$aID[0][1]." ".$aID[0][2]."</span>";
 	}
 
 //end-func's-output ---------------------------------------------------------------------
