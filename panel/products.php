@@ -17,7 +17,7 @@ echo $gui::secondmenu("products");
 		//*************** NEW ***************//
 		if(isset($_GET['item']) && $_GET['item'] == "newsend") {
 					// Skjekker om alle feltene er fylt ut. Hvis ikke får man tilbakemelding på hvem som ikke er det.
-			if (empty($_POST['name']) || empty($_POST['descr']) || empty($_POST['cat']) || empty($_POST['quantity']) || empty($_POST['price']) || empty($_POST['image'])) {
+			if (empty($_POST['name']) || empty($_POST['descr']) || empty($_POST['cat']) || empty($_POST['quantity']) || empty($_POST['price']) || empty($_FILES['image'])) {
 				echo '<div id="error">Alle felter må fylles ut. Vennligst fyll ut:<br /><ul>';
 									if (empty($_POST["name"])) { echo "<li>Navn</li>"; }
 									if (empty($_POST["descr"])) { echo "<li>Bekrivelse</li>"; }
@@ -30,9 +30,16 @@ echo $gui::secondmenu("products");
 			}
 			
 			else {	//Hvis alt er ok, sendes data over til databasen
-				//Setter inn item
-				$sql = "INSERT INTO `Webshop`.`item` (`itemID`, `name`, `quantity`, `descr`, `price`, `image`,) 
-						VALUES (NULL, '".$_POST['name']."', '".$_POST['quantity']."', '".$_POST['descr']."', '".$_POST['price']."', '".$_POST['image']."')";
+				$tmpName  = $_FILES['image']['tmp_name'];  
+       
+      			// leser bilde fil 
+      				$fp      = fopen($tmpName, 'r');
+      				$data = fread($fp, filesize($tmpName));
+      				$data = addslashes($data);
+      				fclose($fp);
+				
+				$sql = "INSERT INTO `Webshop`.`item` (`itemID`, `name`, `quantity`, `descr`, `price`, `image`) 
+						VALUES (NULL, '".$_POST['name']."', '".$_POST['quantity']."', '".$_POST['descr']."', '".$_POST['price']."', '".$data."')";
 				$db->dbQuery($sql);
 				//Kobler item til kategori
 				$sql = "INSERT INTO `Webshop`.`categories` (`catID`, `itemID`)
@@ -48,7 +55,7 @@ echo $gui::secondmenu("products");
 					echo $gui::verified($_POST['name']." ble lagt til"); 
 				}
 				elseif ($bool == false) { 
-					echo $gui::error("Error: En feil har oppstått. Kategorien ble ikke lagt til. Vennligst prøv igjen!");
+					echo $gui::error("Error: En feil har oppstått. Varen ble ikke lagt til. Vennligst prøv igjen!");
 				}
 				
 				$view::showItems($_SESSION['sortByItem']);
@@ -97,7 +104,7 @@ echo $gui::secondmenu("products");
 		}
 		
 		elseif(isset($_GET['item']) && $_GET['item'] == "editsend") {
-			$sql = "UPDATE  `Webshop`.`item` SET  `name` =  '".$_POST['name']."', `image` =  '".$_POST['image']."', `quantity` =  '".$_POST['quantity']."', `descr` =  '".$_POST['descr']."', `price` =  '".$_POST['price']."' WHERE  `item`.`itemID` =".$_POST['itemid'];
+			$sql = "UPDATE  `Webshop`.`item` SET  `name` =  '".$_POST['name']."', `quantity` =  '".$_POST['quantity']."', `descr` =  '".$_POST['descr']."', `price` =  '".$_POST['price']."' WHERE  `item`.`itemID` =".$_POST['itemid'];
 			$db->dbQuery($sql);
 			$sql = "UPDATE  `Webshop`.`categories` SET  `catID` =  '".$_POST['cat']."' WHERE  `categories`.`catID` =".$_POST['oldCatId']." AND  `categories`.`itemID` =".$_POST['itemid']." LIMIT 1";
 			$db->dbQuery($sql);

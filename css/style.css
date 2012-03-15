@@ -324,3 +324,21 @@ table td {
 .itemimage {
 	width: 50px;
 	}
+	
+#status0, #status1, #status2 {
+	width: 35px; 
+	height: 10px; 
+	display: block;
+}
+
+#status0 {
+	background-color: red;
+}
+
+#status1 {
+	background-color: yellow;
+}
+
+#status2 {
+	background-color: green;
+}
