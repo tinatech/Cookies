@@ -208,7 +208,15 @@ class webShopGui {
 	
 		return $content;
 	}
-	
+
+	function showCart() {
+		$content = '
+			<div id="cart">
+			 <h3>Handlekurv</h3>
+			</div>';
+		 echo $content;
+	}
+
 //**************************************//
 //				MELDINGER				//
 //**************************************//
