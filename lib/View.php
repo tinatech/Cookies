@@ -1,14 +1,22 @@
 <?php
-////Denne klassen inneholder alle input-tabeller som benyttes av cookie webshop.
-	//Det vil si at dette er en VIEW-klasse som ikke gj¯r noe annet enn Â vise tabeller 
-		//og sende data til funksjoner til de ulike klassene.
+/**
+ * View.php - Klasse for √• vise alle forms og varer.
+ *
+ * @project	DarkCookie Shop
+ * @author	Petter Walb√∏ Johnsg√•rd, Tina Haaskjold Behrens, Christoffer Vargtass og Kjetil H√∏yme
+ * @ver		0.1
+ *
+ */
 class View {
 
-//§§§§§§§§§§§§§§§§§§§§§§§§§§§ INPUT §§§§§§§§§§§§§§§§§§§§§§§§§§§§§
-		//En temp. simpel mother-fucker som sjekker at konseptet fungerer faktisk.
-			//And it fucking does..
-			
-	//Registrer ny kunde i frontend		
+//¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß INPUT ¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß
+	/* Funksjon som skriver ut input form for √• legge til 
+	 * nye bruker frontend.
+	 *
+	 * Returns:
+	 * Ipnut form for ny bruker.
+	 *
+	 */		
 	function newUserTable() {
 		$content = 
 			"<form action='?user=send' method='post' accept-charset='utf-8' id='new'>
@@ -27,6 +35,16 @@ class View {
 		echo $content;	
 	}
 		
+	/* Funksjon som skriver ut input form for endring av en 
+	 * bruker.
+	 *
+	 * Returns:
+	 * Ipnut form som med utfylt informasjon om en bruker.
+	 *
+	 * example:
+	 * $input = array med informasjon om en bruker;
+	 *
+	 */	
 	function editUserTable($input) {
 		$content = 
 			"<form action='?edit=send' method='post' accept-charset='utf-8' id='new'>
@@ -46,9 +64,13 @@ class View {
 		echo $content;	
 	}
 		
-		
-		//Denne vises kun nÂr adminbruker er verifisert og logget inn.
-		//Hvilke data som skal inn er beskrevet i sql-tabellen.
+	/* Funksjon som skriver ut input form for √• legge til 
+	 * nye admin/medarbeider
+	 *
+	 * Returns:
+	 * Ipnut form for ny admin/medarbeider.
+	 *
+	 */	
 	function newAdminTable() {
 		$content = 
 			"<form action='?user=sendNew' method='post' accept-charset='utf-8' id='new'>
@@ -66,6 +88,16 @@ class View {
 		echo $content;	
 	}
 	
+	/* Funksjon som skriver ut input form for endring av en 
+	 * admin/medarbeider.
+	 *
+	 * Returns:
+	 * Ipnut form som med utfylt informasjon om en admin/medarbeider
+	 *
+	 * example:
+	 * $input = array med informasjon om en admin/medarbeider;
+	 *
+	 */	
 	function editAdminTable($input) {
 		$aID = $input[0][0];
 		$selected = "";
@@ -87,7 +119,13 @@ class View {
 		echo $content;	
 	}
 	
-		// Denne vises i admin-panel OG employee-panel
+	/* Funksjon som skriver ut input form for √• legge til 
+	 * nye kategori
+	 *
+	 * Returns:
+	 * Ipnut form for ny kategori
+	 *
+	 */	
 	function newCategoryTable() {
 		$content = 
 			"<form action='?cat=newsend' method='post' accept-charset='utf-8' id='new'>
@@ -101,6 +139,16 @@ class View {
 	}
 	
 	
+	/* Funksjon som skriver ut input form for endring av en 
+	 * kategori.
+	 *
+	 * Returns:
+	 * Ipnut form som med utfylt informasjon om en kategori
+	 *
+	 * example:
+	 * $input = array med informasjon om en kategori;
+	 *
+	 */	
 	function editCategoryTable($input) {
 		$content = 
 			"<form action='?edit=send' method='post' accept-charset='utf-8' id='new'>
@@ -114,9 +162,14 @@ class View {
 		echo $content;	
 	}
 	
-		//Vises ogsÂ hvis man er admin eller medarbeider
-		//Det skal IKKE vÊre mulig Â opprette en ny vare i en ukjent kategori
-	function NewItemTable() {
+	/* Funksjon som skriver ut input form for √• legge til 
+	 * nye varer p√• lager
+	 *
+	 * Returns:
+	 * Ipnut form for ny vare
+	 *
+	 */	
+	 function NewItemTable() {
 		$db = new Database;
 		$sql = "SELECT * FROM `category`";
 		$sth = $db->dbQuery($sql);
@@ -141,6 +194,15 @@ class View {
 		echo $content2;		
 	}
 	
+	/* Funksjon som skriver ut input form for √• endre en eksisterende vare 
+	 *
+	 * Returns:
+	 * Form input med informasjonen om en spesifikk vare.
+	 *
+	 * example:
+	 * $input = array med all informasjonen om en vare;
+	 *
+	 */	
 	function editItem($input) {
 		$db = new Database;
 		$sql = "SELECT * FROM `category`";
@@ -172,6 +234,17 @@ class View {
 		echo $content2;		
 	}
 	
+	/* Funksjon som skriver ut input form for motatt 
+	 * nye varer p√• lager
+	 *
+	 * Returns:
+	 * Ipnut form som sender tilbake hvilken $itemID 
+	 * som skal brukes.
+	 *
+	 * example:
+	 * $itemID = '2';
+	 *
+	 */	
 	function updateItemQuantity($itemID) {
 		$content = "<form action='?item=updatesend' method='post' accept-charset='utf-8' id='new'>
 				<table>
@@ -183,28 +256,10 @@ class View {
 		echo $content;
 	}
 	
-		//Brukere skal kunne legge til ordre.
-		//Ser for meg to superavanserte dropdown-boxer som f¯rst viser kategori og 
-			//deretter varen i denne kategorien.
-		//Tenker at nÂr bruker har valgt kategori, vare og har trykt OK, sendes bruker til
-			//siden til valgt vare som viser informasjon om den og bestill-knapp som legger
-			//til varen til handlevogn.
-				//Valgt vare legges til (orders) pÂ en eller annen mÂte og samler alle varer
-				//og slettes nÂr bruker trykker send.
-			//SKAL VI LA BRUKERE ANGRE P≈ SINE VALG?? SER FOR MEG AT VI TAR DET HELT
-				//TIL SLUTT
-		//Det er kun kunder som har mulighet til dette. Skal en admin bestill en vare kan han
-			//jaggu registrere seg som kunde.
-	function NewOrder() {
+
+//¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß OUTPUT ¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß¬ß
 	
-	}
-//end-ny input ---------------------------------------------------------------------------
-
-
-
-//§§§§§§§§§§§§§§§§§§§§§§§§§§ OUTPUT §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
-	
-	/* Funksjon som tar imot om sorteringsrekkefølge på outputen og
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen og
 	 * om kunden er markert som aktiv eller ikke.
 	 *
 	 * Returns:
@@ -243,7 +298,7 @@ class View {
 		$sql = "SELECT city FROM `Webshop`.`zipcodes` WHERE `zipcodes`.`zipcode` =".$row['zipcode'];
 		$city = $db->dbQuery($sql);
 		$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			// Skriv ut rader.
  		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$row['address']."</td><td>".$row['zipcode']." ".$city[0][0]."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."| <a href='?edit=".$row['uID']."'>Rediger</a></td></tr>", "\n";
 			}
@@ -253,7 +308,7 @@ class View {
 	}
 	
 	
-	/* Funksjon som tar imot om sorteringsrekkefølge på outputen og
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen og
 	 * om medarbeideren er markert som aktiv eller ikke.
 	 *
 	 * Returns:
@@ -300,7 +355,7 @@ class View {
 				$admin = "Medarbeider";
 				}
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			// Skriv ut rader.
  		   echo "<tr".$even."><td>".$row['sname'].", ".$row['fname']."</td><td>".$admin."</td><td>".$row['username']."</td><td>".$row['email']."</td><td>".$changestatus."</td></tr>", "\n";
 			}
@@ -310,6 +365,16 @@ class View {
 	}
 	
 	
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen for
+	 * √• s√• vise alle kategorier
+	 *
+	 * Returns:
+	 * Tabell med alle kategorier.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 *
+	 */	
 	function showCategories($order) {
 	// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
@@ -329,7 +394,7 @@ class View {
 			}
 			else { $edit = ""; }
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			// Skriv ut rader.
  		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$edit."</td></tr>", "\n";
 			}
@@ -337,7 +402,17 @@ class View {
 		// Avslutt tabell
 		echo "</table>";
 	}
-	
+
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen for
+	 * √• s√• vise alle varer
+	 *
+	 * Returns:
+	 * Tabell med alle varer.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 *
+	 */		
 	function showItems($order) {
 	// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
@@ -359,7 +434,7 @@ class View {
 			$sql = "SELECT * FROM  `category` WHERE `catID` = '".$catId[0][0]."'";
 			$cat = $db->dbQuery($sql);
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			// Skriv ut rader.
  		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['desc']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?edit=".$row['itemID']."&update=quantity'>Varemottak</a> | <a href='?edit=".$row['itemID']."'>Rediger</a></td></tr>", "\n";
 			}
@@ -368,6 +443,57 @@ class View {
 		echo "</table>";
 	}
 	
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen for
+	 * √• s√• vise alle varer
+	 *
+	 * Returns:
+	 * Tabell med alle varer.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 *
+	 */		
+	function showItemsFront($order) {
+	// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sql = "SELECT * FROM  `item` ".$order;
+		$sth = $db->dbQuery($sql);
+		
+		$gui = new webShopGui;
+		$item = $gui::orderLink("sortByItem", "name", "Vare");
+		$quantity = $gui::orderLink("sortByItem", "quantity", "Antall");
+		$price = $gui::orderLink("sortByItem", "price", "Pris");
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td id='name'>".$item."</td><td>Beskrivelse</td><td>Kategori</td><td>".$quantity."</td><td>".$price."</td><td></td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) { 
+			$sql = "SELECT * FROM  `categories` WHERE `itemID` = '".$row['itemID']."'";
+			$catId = $db->dbQuery($sql);
+			$sql = "SELECT * FROM  `category` WHERE `catID` = '".$catId[0][0]."'";
+			$cat = $db->dbQuery($sql);
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
+			// Skriv ut rader.
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['desc']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kj√∏p</a></td></tr>", "\n";
+			}
+		
+		// Avslutt tabell
+		echo "</table>";
+	}
+
+	/* Funksjon som tar imot om sorteringsrekkef√∏lge p√• outputen for
+	 * √• s√• vise alle ordre eller med spesifikk status
+	 *
+	 * Returns:
+	 * Tabell med ordre.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 * $status = '0' or $status = 'all';
+	 *
+	 */		
 	function showOrders($status, $order) {
 	// Opprett kobling mot databasen og hent order.
 		$db = new Database;
@@ -390,7 +516,7 @@ class View {
 			$name = $db->dbQuery($sql);
 			
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			
 			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$name[0][2].", ".$name[0][1]."</td><td><span id='status".$row['status']."'></span></td><td>".$row['time']."</td><td><a href='order.php?order=".$row['orderID']."'>Se ordre</a></td></tr>", "\n";
 		}
@@ -398,6 +524,15 @@ class View {
 		echo "</table>";
 	}
 
+	/* Funksjon som tar imot om en ordreID og viser hva den inneholder.
+	 *
+	 * Returns:
+	 * Tabell med innholdet i en ordre.
+	 *
+	 * example:
+	 * $orderid = '1';
+	 *
+	 */	
 	function showOrder($orderid) {
 	// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
@@ -432,7 +567,7 @@ class View {
 			}
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			$price = $row['quantity'] * $row['price'];
-			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall f√•r <tr> klassen .even
 			
 			echo "<tr".$even."><td>".$item[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td>".$price.",-</td></tr>", "\n";
 			
@@ -446,9 +581,5 @@ class View {
 		$aID = $db->dbQuery($sql);
 		echo "<span class='orderbutton' style='margin-left: -10px'><strong>Ordrebehandler:</strong> ".$aID[0][1]." ".$aID[0][2]."</span>";
 	}
-
-//end-func's-output ---------------------------------------------------------------------
-
-	
-}
+} // End class.
 ?>

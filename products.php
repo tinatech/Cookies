@@ -5,50 +5,32 @@ include_once("header.php");
 <div id="content">
 <div id="mainbar">	
 <?php 
-	//Kobling til databaseklassen.
-		$db = new Database;	
+		//Kobling til databaseklassen.
+		$db = new Database;
 		
-	//*************** NEW ***************//
-function vis_varer($name)
-{
-	
-  $sql = "SELECT * FROM item";
-  $resultat = mysql_query($sql);
-
-  $linje = mysql_fetch_array($resultat, MYSQL_ASSOC);
-  print("<table border='1'>\n");
-
-  print("<tr>\n");
-  print("<th>Varekode</th>\n");
-  print("<th>Navn</th>\n");
-  print("<th>Pris</th>\n");
-  print("<th>Antall</th>\n");
-  print("</tr>\n");
-
-  while ($linje)
-  {
-    $itemID = $linje["Varekode"];
-    $name = $linje["Navn"];
-    $price = $linje["PrisPrEnhet"];
-    $quantity = $linje["Antall"];
-
-    print("<tr>\n");
-    print("<td>" . $itemID . "</td>\n");
-    print("<td>" . $name . "</td>\n");
-    print("<td>" . number_format($price,2) . " kr</td>\n");
-    print("<td>" . $quantity . "</td>\n");
-    print("</tr>\n");
-
-    $linje = mysql_fetch_array($resultat, MYSQL_ASSOC);
-  }
-  print("</table>\n");
-}	
-?>
-<?php
-
-vis_varer($name)
-
-?>
+		$sql = "SELECT * FROM `category` ORDER BY name ASC";
+		$sth = $db->dbQuery($sql);
+		echo "<div id='secondmenu' style='margin-left: -5px'><ul>";
+		foreach($sth as $row) { 
+		 echo "<a href='?show=".$row['catID']."'><li class='first'>".$row['name']."</li></a>";
+		}
+		echo "</ul></div>";
+		
+		//Sjekker om ny sortBy session skal settes. Hvis ingen session er satt settes standard.
+		if (isset($_GET['sortBy']) != null && isset($_GET['sortOrder']) != null) {
+			$session::setSortBy("sortByItem", $_GET['sortBy'], strtoupper($_GET['sortOrder']));
+		}
+		elseif (!isset($_SESSION['sortByItem'])) { $session::setSortBy("sortByItem", "name", "ASC"); }
+		
+		//*************** SHOW ITEMS ***************//
+		
+		else {
+		$gui::h2("Varer");
+		$view::showItemsFront($_SESSION['sortByItem']);
+		}
+		
+		
+		?>		
 
 
 	</div><!-- End mainbar -->	
