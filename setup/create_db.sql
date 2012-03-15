@@ -77,7 +77,7 @@ CREATE  TABLE IF NOT EXISTS `Webshop`.`item` (
   `itemID` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `quantity` INT NULL ,
-  `desc` VARCHAR(255) NULL ,
+  `descr` VARCHAR(255) NULL ,
   `price` FLOAT NOT NULL ,
   `image` BLOB NULL ,
   PRIMARY KEY (`itemID`) )
