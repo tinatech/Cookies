@@ -175,7 +175,7 @@ class View {
 		$sth = $db->dbQuery($sql);
 		
 		$content = 
-			"<form action='?item=newsend' method='post' accept-charset='utf-8' id='new'>
+			"<form enctype='multipart/form-data' action='?item=newsend' method='post' accept-charset='utf-8' id='new'>
 				<table>
 					<tr><td>Navn:</td><td><input type='text' name='name' /></td></tr>
 					<tr><td>Beskrivelse:</td><td><input type='text' name='descr' /></td></tr>
@@ -188,12 +188,11 @@ class View {
 		$content2 =	"</select></td></tr>
 					<tr><td>Antall:</td><td><input type='number' min='0' name='quantity' style='width: 50px;' /></td></tr>
 					<tr><td>Pris:</td><td><input type='number' min='0' name='price' style='width: 50px;' /></td></tr>
+					<input type='hidden' name='MAX_FILE_SIZE' value='99999999' />
+					<tr><td>Bilde:</td><td><input type='file' name='image' accept='image/jpeg' style='border: 0;' /></td></tr>
 				</table>
 				<input type='submit' value='Legg til' id='button' />	
 			</form>";
-		echo "<form method=\"post\" enctype=\"multipart/form-data\"><table width=\"350\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\" class=\"box\"><tr><td width=\"246\">
-			<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"650000\"><input name=\"image\" type=\"file\" id=\"image\"></td>
-			<td width=\"80\"><input name=\"upload\" type=\"submit\" class=\"box\" id=\"upload\" value=\" Upload \"></td></tr></table></form>";
 		echo $content2;		
 	}
 	
