@@ -413,6 +413,9 @@ class View {
 		foreach($sth as $row) {
 			$sql = "SELECT * FROM  `item` WHERE `item`.`itemID` =".$row['itemID'];
 			$item = $db->dbQuery($sql);
+			if($order[0][2] == "0") { $sql2 = "UPDATE `item` SET quantity=quantity-".$row['quantity']." WHERE `item`.`itemID` =".$row['itemID'];
+			$db->dbQuery($sql2);
+			}
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			$price = $row['quantity'] * $row['price'];
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even

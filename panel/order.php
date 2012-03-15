@@ -14,7 +14,6 @@ echo $gui::secondmenu("orders");
 			elseif(isset($_GET['order']) && isset($_GET['status']) && $_GET['status'] == "2") {
 				$sql = "UPDATE `Webshop`.`ordr` SET `status` = '2', `pby` = '".$_SESSION['aID']."' WHERE `ordr`.`orderID` = ".$_GET['order'];
 				$db->dbQuery($sql);
-				header("Location: index.php?status=2");
 				echo "<script language='javascript'>window.location.href='index.php?status=2';</script>";
 			}
 			else {
@@ -28,7 +27,7 @@ echo $gui::secondmenu("orders");
 					$gui::infobox("Ordren er flyttet til under behandling");
 				}
 				elseif($exist[0][2] == '2') {
-					$gui::infobox("Orderen er ferdigbehandlet.");
+					$gui::infobox("Orderen er allerede sendt.");
 				}
 			
 				$orderid = $_GET['order'];
