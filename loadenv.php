@@ -11,6 +11,8 @@ if ( !defined('CONFDIR')) { define('CONFDIR', $_SERVER['DOCUMENT_ROOT']  . '/con
 if ( !defined('LIBDIR' )) { define('LIBDIR' , $_SERVER['DOCUMENT_ROOT']  . '/lib/' ); }
 if ( !defined('IMGDIR' )) { define('IMGDIR' , $_SERVER['DOCUMENT_ROOT']  . '/img/' ); }
 if ( !defined('CSSDIR' )) { define('CSSDIR' , './css/'); }
+// Load view class
+
 
 
 require(CONFDIR . "config.php");
@@ -24,5 +26,7 @@ $gui = new WebshopGui;
 include_once (LIBDIR . "View.php");
 $view = new View;
 
+include_once (LIBDIR . "Cart.php");
+$cart = new Cart();
 
 ?>
