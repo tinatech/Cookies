@@ -210,10 +210,11 @@ class webShopGui {
 	}
 
 	function showCart() {
-		$content = '
-			<div id="cart">
+		$content = "
+			<div id='cart'>
 			 <h3>Handlekurv</h3>
-			</div>';
+			 Antall varer: ".count($_SESSION['cart'])."
+			</div>";
 		 echo $content;
 	}
 
