@@ -102,10 +102,7 @@ class Login{
 			$_SESSION['username'] = $this->user;
 			$_SESSION['fname'] = $this->fname;
 			$_SESSION['sname'] = $this->sname;
-			echo "<h2>Velkommen $this->fname $this->sname</h2>
-			      <p>Logger inn...</p>";
-
-			header("refresh: 5; index.php");
+			header("Location; index.php");
 			break;
 		}
 	
@@ -143,10 +140,9 @@ class Login{
 		session_start();
 		
 		if ($_SESSION['auth'] == '1') {
-			echo '<h2>Logger ut</h2>';
 			$_SESSION['auth'] = 0;
 			session_destroy();
-			header("refresh: 2; index.php");
+			header("Location: index.php");
 		} else {
 			header("Location: index.php");
 		}

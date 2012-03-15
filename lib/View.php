@@ -482,10 +482,10 @@ class View {
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
  		   	if ($catnr != NULL && $catId[0][0] == $catnr) {
- 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><form action='?cat=".$catnr."' method='POST'><input type='number' name='quantity' min='1' max='10' value='1'><input type='hidden' name='itemid' value='".$row['itemID']."'><input type='submit' value='Kjøp'></form></td></tr>", "\n";
 			}
 			elseif ($catnr == NULL) {
- 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   		echo "<tr".$even."><td>".$image."</td><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><form action='' method='POST'><input type='number' name='quantity' min='1' max='10' value='1'><input type='hidden' name='itemid' value='".$row['itemID']."'><input type='submit' value='Kjøp'></form></td></tr>", "\n";
 			}
 			}
 		

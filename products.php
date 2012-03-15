@@ -7,6 +7,9 @@ include_once("header.php");
 <?php 
 		//Kobling til databaseklassen.
 		$db = new Database;
+		if(isset($_POST['quantity']) && isset($_POST['itemid'])) {
+			$cart::addItem($_POST['itemid'], $_POST['quantity']);
+			}
 		
 		$sql = "SELECT * FROM `category` ORDER BY name ASC";
 		$sth = $db->dbQuery($sql);
