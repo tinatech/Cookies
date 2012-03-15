@@ -213,7 +213,7 @@ class webShopGui {
 		$content = "
 			<div id='cart'>
 			 <h3>Handlekurv</h3>
-			 Antall varer: ".count($_SESSION['cart'])."
+			 Antall varer: ".count(isSet($_SESSION['cart']))."
 			</div>";
 		 echo $content;
 	}

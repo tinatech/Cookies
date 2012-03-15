@@ -102,7 +102,7 @@ class Login{
 			$_SESSION['username'] = $this->user;
 			$_SESSION['fname'] = $this->fname;
 			$_SESSION['sname'] = $this->sname;
-			header("Location; index.php");
+			header("Location: index.php");
 			break;
 		}
 	
@@ -125,16 +125,6 @@ class Login{
 		}
 
 	}
-
-	public function isAdmin() {
-		if($this->admin)
-			return true;
-	}	
-
-	public function getUsername() {
-  		return $this->user;
- 	}
-
 
 	public function logout () {
 		session_start();
