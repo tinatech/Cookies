@@ -4,22 +4,15 @@ require_once('header.php');
 <div id="content">
 	        <div id="mainbar">
 		                <?php
-                if(isset($_GET['status']) && $_GET['status'] == "1") {
-			                        $gui::h2("Ordre under behandling");
-						                        $view::showOrders("1", "");
-						                }
-                elseif(isset($_GET['status']) && $_GET['status'] == "2") {
-			                        $gui::h2("Sendte ordre");
-						                        $view::showOrders("2", "");
-						                }
-                elseif(isset($_GET['status']) && $_GET['status'] == "all") {
-			                        $gui::h2("Alle ordre");
-						                        $view::showOrders("all", "");
-						                }
-                else {
-			                        $gui::h2("Ubehandlede ordrer");
-						                        $view::showOrders("0", "");
-						                }
+			                        if (isset($_GET['order'])) {
+			                        $gui::h2("Ordre");
+						            $view::showOrderUser($_GET['order']);
+						            }
+						            else {			                        
+			                        $gui::h2("Ordre");
+						            $view::showOrdersUser($_SESSION['uID']);
+						            }
+						                
                 ?>
         </div><!-- End mainbar -->
 </div><!-- End content -->

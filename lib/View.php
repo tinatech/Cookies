@@ -533,6 +533,46 @@ class View {
 		// Avslutt tabell
 		echo "</table>";
 	}
+	
+		/* Funksjon som tar imot om sorteringsrekkefølge på outputen for
+	 * å så vise alle ordre eller med spesifikk status
+	 *
+	 * Returns:
+	 * Tabell med ordre.
+	 *
+	 * example:
+	 * $order = 'ORDER BY `sname` ASC';
+	 * $status = '0' or $status = 'all';
+	 *
+	 */		
+	function showOrdersUser($uid) {
+	// Opprett kobling mot databasen og hent order.
+		$db = new Database;
+		$sql = "SELECT * FROM  `ordr` WHERE uid =".$uid;
+		$sth = $db->dbQuery($sql);
+		
+		
+		
+		// Skriv ut tabellstart
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td>OrdreID</td><td>Kundenavn</td><td>Status</td><td>Bestillingsdato</td><td>Handlinger</td></tr>", "\n";
+		$rowCount = 0;
+		foreach($sth as $row) {
+			$sql = "SELECT * FROM  `user` WHERE `uID` =".$row['uid'];
+			$name = $db->dbQuery($sql);
+			
+			if ($row['status'] == 0) { $status = "Ubehandlet"; }
+			if ($row['status'] == 1) { $status = "Under behandling"; }
+			if ($row['status'] == 2) { $status = "Sendt"; }
+			
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			
+			echo "<tr".$even."><td>".$row['orderID']."</td><td>".$name[0][2].", ".$name[0][1]."</td><td>".$status."</td><td>".$row['time']."</td><td><a href='?order=".$row['orderID']."'>Se ordre</a></td></tr>", "\n";
+		}
+		// Avslutt tabell
+		echo "</table>";
+	}
 
 	/* Funksjon som tar imot om en ordreID og viser hva den inneholder.
 	 *
@@ -590,6 +630,67 @@ class View {
 		$sql = "SELECT * FROM `worker` WHERE `worker`.`aID` =".$order[0][4];
 		$aID = $db->dbQuery($sql);
 		echo "<span class='orderbutton' style='margin-left: -10px'><strong>Ordrebehandler:</strong> ".$aID[0][1]." ".$aID[0][2]."</span>";
+	}
+	
+	/* Funksjon som tar imot om en ordreID og viser hva den inneholder.
+	 *
+	 * Returns:
+	 * Tabell med innholdet i en ordre.
+	 *
+	 * example:
+	 * $orderid = '1';
+	 *
+	 */	
+	function showOrderUser($orderid) {
+	// Opprett kobling mot databasen og hent workers.
+		$db = new Database;
+		$sql = "SELECT * FROM  `orderlines` WHERE `orderlines`.`orderid` =".$orderid;
+		$sth = $db->dbQuery($sql);
+		
+		
+		$sql = "SELECT * FROM  `ordr` WHERE `ordr`.`orderID` =".$orderid;
+		$order = $db->dbQuery($sql);
+		
+		if ( $order[0][1] != $_SESSION['uID'] )	{
+			die('Du har ikke tilgang her');
+			}
+		
+		$sql = "SELECT * FROM  `user` WHERE `user`.`uID` =".$order[0][1];
+		$user = $db->dbQuery($sql);
+		
+		$sql = "SELECT * FROM  `zipcodes` WHERE `zipcodes`.`zipcode` =".$user[0][4];
+		$city = $db->dbQuery($sql);
+		
+		// Skriv ut tabellstart
+		echo "<strong>Bestillingsadresse:</strong><br />";
+		echo $user[0][1]." ".$user[0][2]."<br />", "\n";
+		echo $user[0][3]."<br />", "\n";
+		echo $user[0][4]." ".$city[0][1]."<br /><br />", "\n";
+		
+		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
+		echo "<tr id=\"overskrift\"><td>Vare</td><td>Antall</td><td>Enhetspris</td><td>Totalpris</td></tr>", "\n";
+		$rowCount = 0;
+		$totalprice = 0;
+		foreach($sth as $row) {
+			$sql = "SELECT * FROM  `item` WHERE `item`.`itemID` =".$row['itemID'];
+			$item = $db->dbQuery($sql);
+			if($order[0][2] == "0") { $sql2 = "UPDATE `item` SET quantity=quantity-".$row['quantity']." WHERE `item`.`itemID` =".$row['itemID'];
+			$db->dbQuery($sql2);
+			}
+			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
+			$price = $row['quantity'] * $row['price'];
+			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
+			
+			echo "<tr".$even."><td>".$item[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td>".$price.",-</td></tr>", "\n";
+			
+			$totalprice = $totalprice + $price;
+		}
+		// Avslutt tabell
+		echo "<tr id=\"overskrift\"><td></td><td></td><td>Totalpris:</td><td>".$totalprice.",-</td></tr>";
+		echo "</table><br /><br />";
+		$gui = new webShopGui;
+		echo $gui::back();
+		
 	}
 } // End class.
 ?>
