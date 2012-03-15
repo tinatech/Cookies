@@ -321,3 +321,6 @@ table td {
 #overskrift #adminstatus { width: 150px; }
 #overskrift #username { width: 150px; }
 
+.itemimage {
+	width: 50px;
+	}
