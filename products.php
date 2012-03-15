@@ -13,7 +13,9 @@ include_once("header.php");
 		echo "<div id='secondmenu' style='margin-left: -5px'><ul>";
 		echo "<a href='products.php'><li class='first'>Alle</li></a>";
 		foreach($sth as $row) { 
-		 echo "<a href='?cat=".$row['catID']."'><li>".$row['name']."</li></a>";
+			$sql = "SELECT * FROM `categories` WHERE `catID` =".$row['catID'];
+			$exist = $db->dbQueryExist($sql);
+			if ($exist == true) { echo "<a href='?cat=".$row['catID']."'><li>".$row['name']."</li></a>"; }
 		}
 		echo "</ul></div>";
 		
