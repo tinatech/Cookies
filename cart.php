@@ -15,7 +15,7 @@ echo $gui::secondmenu("orders");
 	$i = 0;
 	
 	
-	if(isset($_POST['checkout'])) { 
+	if(isset($_POST['checkout']) && isset($_SESSION['uID'])) { 
 
 		$sql = "INSERT INTO  `Webshop`.`ordr` (`orderID` ,`uid` ,`status` ,`time` ,`pby`)
 				VALUES ( NULL ,  '".$_SESSION['uID']."',  '0', NOW(), NULL )";
@@ -31,6 +31,29 @@ echo $gui::secondmenu("orders");
 		}
 		$_SESSION['cart'] = NULL;
 	}
+	if(isset($_POST['checkout']) && !isset($_SESSION['uID'])) { $gui::error("Du må logge inn for å betille varer"); }
+	
+	if(isset($_POST['delete'])) { 
+		$i = $_POST['count'];
+		unset($_SESSION['cart'][$i]);
+
+		$_SESSION['cart'] = array_values($_SESSION['cart']);
+		echo "<script language='javascript'>window.location.href='cart.php';</script>";
+	}
+	
+	/*if(isset($_POST['update'])) { 
+		$i = $_POST['count'];
+		$item = array(
+			'itemID' => $_SESSION['cart'][$i]['itemID'],
+			'ItemQty' => $_POST['quantity'],
+	       	'itemPrice' => $_SESSION['cart'][$i]['itemPrice']);
+	    $item2 = array(
+			'itemID' => $_SESSION['cart'][$i]['itemID'],
+			'ItemQty' => $_SESSION['cart'][$i]['ItemQty'],
+	       	'itemPrice' => $_SESSION['cart'][$i]['itemPrice']);
+		$_SESSION['cart'][$i][$item2] > $_SESSION['cart'][$i][$item];
+   		echo "<script language='javascript'>window.location.href='cart.php';</script>";
+	}*/
 	
 	
 	$totalprice = 0;
@@ -43,13 +66,13 @@ echo $gui::secondmenu("orders");
 			echo $name[0][1];
 			echo "</td><td><input type='number' value='".$cart[$i]['ItemQty']."' name='quantity' style='width: 30px;'></td><td>";
 			echo $cart[$i]['itemPrice'];
-			echo ",-</td><td style='width: 120px;'><input type='submit' name='submit' value='Oppdater' /><input type='submit' name='delete' value='Slett' /></td></tr></form>";
-			$totalprice = $totalprice + $cart[$i]['itemPrice'];
+			echo ",-</td><td style='width: 120px;'><input type='hidden' name='count' value='".$i."'><input type='submit' name='delete' value='Slett' /></td></tr></form>";
+			$totalprice = $totalprice + ($cart[$i]['itemPrice'] * $cart[$i]['ItemQty']);
 			$i++;
 		}
 	echo "<tr style='background-color: #efefef;'><td></td><td><strong>Totalpris</strong></td><td>".$totalprice.",-</td><td></td></table>";
 	
-	
+	//<input type='submit' name='update' value='Oppdater' />
 	
 	
 		
