@@ -15,7 +15,7 @@ if(isset($_SESSION['auth']) && $_SESSION['auth'] == 1 && isSet($_SESSION['aID'])
 	$session = new Session;
 	
 	// Henter inn header informasjon
-	echo $gui::header("Administrasjons panel");
+	echo $gui::headerh("Administrasjons panel");
 	echo $gui::menu("admin");
 } else {
 	header("Location: login.php");

@@ -15,7 +15,7 @@ class webShopGui {
 // Send inn hvilket overskrift navn     //
 //**************************************//
 
-	function Header($name) {
+	function Headerh($name) {
 		$loginStatus = webShopGui::loginStatus();
 		$loginPanel = webShopGui::loginPanel();
 		$content = '<!DOCTYPE html>
