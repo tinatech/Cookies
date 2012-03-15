@@ -17,15 +17,19 @@ echo $gui::secondmenu("orders");
 	
 	if(isset($_POST['checkout'])) { 
 
-	$sql = "INSERT INTO  `Webshop`.`ordr` (`orderID` ,`uid` ,`status` ,`time` ,`pby`)
-			VALUES ( NULL ,  '".$_SESSION['uID']."',  '0',  'CURDATE()', NULL )";
-	$db->dbQuery($sql);
-	
-	
-	echo "wee"; 
-	
-	
-	
+		$sql = "INSERT INTO  `Webshop`.`ordr` (`orderID` ,`uid` ,`status` ,`time` ,`pby`)
+				VALUES ( NULL ,  '".$_SESSION['uID']."',  '0', NOW(), NULL )";
+		$db->dbQuery($sql);
+		$sql = "SELECT LAST_INSERT_ID()";
+		$id = $db->dbQuery($sql);
+		
+		while($i < $count) {
+		$sql = "INSERT INTO  `Webshop`.`orderlines` (`orderLineID` ,`itemID` ,`orderID` ,`price` ,`quantity`)
+				VALUES (NULL ,  '".$cart[$i]['itemID']."',  '".$id[0][0]."',  '".$cart[$i]['itemPrice']."',  '".$cart[$i]['ItemQty']."')";
+		$db->dbQuery($sql);
+		$i++;
+		}
+		$_SESSION['cart'] = NULL;
 	}
 	
 	

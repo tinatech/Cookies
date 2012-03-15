@@ -32,7 +32,8 @@ class Cart {
 	       		'itemPrice' => $price);
 
 		array_push($_SESSION['cart'], $item);
-		print_r($_SESSION['cart']);
+		$gui = new webShopGui;
+		$gui::verified("Vare er lagt i handlekurven");
 	}
 
 	function rmItem($itemID) {
