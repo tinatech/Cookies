@@ -191,6 +191,9 @@ class View {
 				</table>
 				<input type='submit' value='Legg til' id='button' />	
 			</form>";
+		echo "<form method=\"post\" enctype=\"multipart/form-data\"><table width=\"350\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\" class=\"box\"><tr><td width=\"246\">
+			<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"650000\"><input name=\"image\" type=\"file\" id=\"image\"></td>
+			<td width=\"80\"><input name=\"upload\" type=\"submit\" class=\"box\" id=\"upload\" value=\" Upload \"></td></tr></table></form>";
 		echo $content2;		
 	}
 	
@@ -427,6 +430,7 @@ class View {
 		// Skriv ut tabellstart
 		echo "<table id=\"workers\" cellspacing=\"0\">", "\n";
 		echo "<tr id=\"overskrift\"><td id='name'>".$item."</td><td>Beskrivelse</td><td>Kategori</td><td>".$quantity."</td><td>".$price."</td><td>Handlinger</td></tr>", "\n";
+
 		$rowCount = 0;
 		foreach($sth as $row) { 
 			$sql = "SELECT * FROM  `categories` WHERE `itemID` = '".$row['itemID']."'";
