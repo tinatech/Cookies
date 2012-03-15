@@ -427,29 +427,6 @@ class View {
 
 //end-func's-output ---------------------------------------------------------------------
 
-
-
-//¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ LOG INN ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
-
-		//Funksjon som sender brukernavn og passord til validering
-			//DET MÅ SENDES EN DB FORESPØRSEL!!
-			//Slik jeg tenker det kan UserLogin-funksjon sende forespørsel til
-				//Database-klassen som sjekker om bruker eller passord er gyldig
-					//og Database-klassen sender true eller false tilbake til validering
-					//og validering gir beskjed om login lykkes eller ei.
-	function showLogin() {
-		$form = '
-			<div id="login">
-				<form action="login.php" method="post">
-					<label for="username">Brukernavn: </label>
-					<input type="text" name="username" maxlength="20"/><br/>
-					<label for="password">Passord: </label>
-					<input type="text" name="password" maxlength="20"/><br/>
-					<input type="submit" name="submit" value="Login"/>
-				</form>
-			</div>';
-
-		echo $form;	
-	}	
+	
 }
 ?>

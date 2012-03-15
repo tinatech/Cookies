@@ -36,7 +36,7 @@ else if(isset($_SESSION['auth']) && $_SESSION['auth'] == 1 && isSet($_SESSION['a
 
 	/* if page is not called from login form
  	* send the user back to index.php */
-	echo $gui::login("Login");
+	echo $gui::login("Administrasjonspanel Login");
 	echo $gui::loginForm();
 }
 ?>

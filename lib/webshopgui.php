@@ -16,7 +16,8 @@ class webShopGui {
 //**************************************//
 
 	function Header($name) {
-	
+		$loginStatus = webShopGui::loginStatus();
+		$loginPanel = webShopGui::loginPanel();
 		$content = '<!DOCTYPE html>
 					<html>
 					<head>
@@ -31,7 +32,7 @@ class webShopGui {
 
 					<header>
 						<div id="webshopname"><a href="index.php"><h1>'.$name.'</h1></a></div>
-						<div id="userinfo"><a href="logout.php">Logg ut</a> | <a href="register.php">Registrer deg som kunde</a></div>
+						<div id="userinfo">'.$loginStatus.' | '.$loginPanel.'</div>
 					</header>';
 		
 		return $content;
@@ -274,5 +275,31 @@ class webShopGui {
 			';
 		return $content;
 	}
+
+	function loginStatus () {
+		if(isSet($_SESSION['auth']) == '1') {
+			if(isSet($_SESSION['username'])) {
+				$name = '<div id="greeting">Logget inn: 
+					'.$_SESSION['username'].'</div>';
+			}
+
+			return ''.$name.' <a href="logout.php">Logg ut</a>';
+
+		} else {
+			return '<a href="login.php">Logg inn</a>';
+		}
+	}
+
+	function loginPanel () {
+		if(isSet($_SESSION['auth']) == '1' && !isSet($_SESSION['aID'])) {
+			return '<a href="userpanel.php">Brukerpanelet</a>';
+		} else if (isSet($_SESSION['aID'])) {
+			return '';
+		} else {
+			return '<a href="register.php">Registrer deg som kunde</a>';
+		}
 	
+	}
+	
+		
 }

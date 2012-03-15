@@ -16,7 +16,7 @@ require(LIBDIR . "Login.php");
 <div id="sidebar">
             <div id="bestsellers"> <!--start bestsellers-->
                         <h3>Logg inn</h3>
-                        <p>Logg inn eller <a href="register.php">registrer deg</a> som ny kunde.</p>
+                        <p><a href="login.php">Logg inn</a> eller <a href="register.php">registrer deg</a> som ny kunde.</p>
             </div> <!--end bestsellers-->
 </div>
 <div id="mainbar">
@@ -27,10 +27,14 @@ require(LIBDIR . "Login.php");
  * If not, send the user back to index.php
  */
 if(!isset($_POST['submit'])) {
-	echo $gui::loginForm();
+	if(isSet($_SESSION['auth']) == '1') {
+		header("Location: index.php");
+	} else {
+		echo $gui::loginForm();
+	}
 } else {
-	$username = $_POST['user'];
-	$password = $_POST['pass'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 	
 	$login = new Login();				// Creates a new login instance
 	$login->userLogin($username,$password);         // Starts the login process

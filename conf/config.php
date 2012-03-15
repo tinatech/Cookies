@@ -1,21 +1,6 @@
 <?php
-/**
- * GLOBAL CONFIGURATION
- *
- * This file contain all global configuration and constants
- *
- *
+/*
+ * UNUSED
  */
-
-/* Loads global variables and enviroment*/
-
-///////////////////////////////////////////////////////////////////////////////
-// PATHS
-///////////////////////////////////////////////////////////////////////////////
-
-$lib = 'lib/';
-$img = 'images/';
-$style = 'css/';
-
 
 ?>
