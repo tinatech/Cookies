@@ -178,7 +178,7 @@ class View {
 			"<form action='?item=newsend' method='post' accept-charset='utf-8' id='new'>
 				<table>
 					<tr><td>Navn:</td><td><input type='text' name='name' /></td></tr>
-					<tr><td>Beskrivelse:</td><td><input type='text' name='desc' /></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='text' name='descr' /></td></tr>
 					<tr><td>Kategori:</td><td><select name='cat'>";
 		echo $content;
 		foreach($sth as $row) { 
@@ -214,7 +214,7 @@ class View {
 			"<form action='?item=editsend' method='post' accept-charset='utf-8' id='new'>
 				<table>
 					<tr><td>Navn:</td><td><input type='text' name='name' value='".$input[0][1]."' /></td></tr>
-					<tr><td>Beskrivelse:</td><td><input type='text' name='desc' value='".$input[0][3]."' /></td></tr>
+					<tr><td>Beskrivelse:</td><td><input type='text' name='descr' value='".$input[0][3]."' /></td></tr>
 					<tr><td>Kategori:</td><td><select name='cat'>";
 		echo $content;
 		foreach($sth as $row) {
@@ -436,7 +436,7 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['desc']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?edit=".$row['itemID']."&update=quantity'>Varemottak</a> | <a href='?edit=".$row['itemID']."'>Rediger</a></td></tr>", "\n";
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?edit=".$row['itemID']."&update=quantity'>Varemottak</a> | <a href='?edit=".$row['itemID']."'>Rediger</a></td></tr>", "\n";
 			}
 		
 		// Avslutt tabell
@@ -476,7 +476,7 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['desc']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
 			}
 		
 		// Avslutt tabell

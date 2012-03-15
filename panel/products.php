@@ -17,7 +17,7 @@ echo $gui::secondmenu("products");
 		//*************** NEW ***************//
 		if(isset($_GET['item']) && $_GET['item'] == "newsend") {
 					// Skjekker om alle feltene er fylt ut. Hvis ikke får man tilbakemelding på hvem som ikke er det.
-			if (empty($_POST['name']) || empty($_POST['desc']) || empty($_POST['cat']) || empty($_POST['quantity']) || empty($_POST['price'])) {
+			if (empty($_POST['name']) || empty($_POST['descr']) || empty($_POST['cat']) || empty($_POST['quantity']) || empty($_POST['price'])) {
 				echo '<div id="error">Alle felter må fylles ut. Vennligst fyll ut:<br /><ul>';
 									if (empty($_POST["name"])) { echo "<li>Navn</li>"; }
 									if (empty($_POST["descr"])) { echo "<li>Bekrivelse</li>"; }
@@ -30,8 +30,8 @@ echo $gui::secondmenu("products");
 			
 			else {	//Hvis alt er ok, sendes data over til databasen
 				//Setter inn item
-				$sql = "INSERT INTO `Webshop`.`item` (`itemID`, `name`, `quantity`, `desc`, `price`) 
-						VALUES (NULL, '".$_POST['name']."', '".$_POST['quantity']."', '".$_POST['desc']."', '".$_POST['price']."')";
+				$sql = "INSERT INTO `Webshop`.`item` (`itemID`, `name`, `quantity`, `descr`, `price`) 
+						VALUES (NULL, '".$_POST['name']."', '".$_POST['quantity']."', '".$_POST['descr']."', '".$_POST['price']."')";
 				$db->dbQuery($sql);
 				//Kobler item til kategori
 				$sql = "INSERT INTO `Webshop`.`categories` (`catID`, `itemID`)
@@ -96,7 +96,7 @@ echo $gui::secondmenu("products");
 		}
 		
 		elseif(isset($_GET['item']) && $_GET['item'] == "editsend") {
-			$sql = "UPDATE  `Webshop`.`item` SET  `name` =  '".$_POST['name']."', `quantity` =  '".$_POST['quantity']."', `desc` =  '".$_POST['desc']."', `price` =  '".$_POST['price']."' WHERE  `item`.`itemID` =".$_POST['itemid'];
+			$sql = "UPDATE  `Webshop`.`item` SET  `name` =  '".$_POST['name']."', `quantity` =  '".$_POST['quantity']."', `descr` =  '".$_POST['descr']."', `price` =  '".$_POST['price']."' WHERE  `item`.`itemID` =".$_POST['itemid'];
 			$db->dbQuery($sql);
 			$sql = "UPDATE  `Webshop`.`categories` SET  `catID` =  '".$_POST['cat']."' WHERE  `categories`.`catID` =".$_POST['oldCatId']." AND  `categories`.`itemID` =".$_POST['itemid']." LIMIT 1";
 			$db->dbQuery($sql);
