@@ -1,9 +1,9 @@
 <?php
 session_start();
-require("../loadenv.php");
-include "../functions.php";
-include "../lib/DB.php";
-include "../lib/Session.php";
+require($_SERVER['DOCUMENT_ROOT'] . "/loadenv.php");
+include(ROOTDIR. "functions.php");
+include(LIBDIR. "DB.php");
+include(LIBDIR. "/Session.php");
 
 /*
  * Check if user is logged in to admin panel

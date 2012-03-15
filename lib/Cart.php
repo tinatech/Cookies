@@ -8,7 +8,7 @@
  *
  */
 
-require_once("./loadenv.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/loadenv.php");
 
 
 class Cart {
