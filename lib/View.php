@@ -453,7 +453,7 @@ class View {
 	 * $order = 'ORDER BY `sname` ASC';
 	 *
 	 */		
-	function showItemsFront($order) {
+	function showItemsFront($order, $catnr) {
 	// Opprett kobling mot databasen og hent workers.
 		$db = new Database;
 		$sql = "SELECT * FROM  `item` ".$order;
@@ -476,7 +476,12 @@ class View {
 			$even = ""; // Hvis det er partall som settes ikke inn noen ekstra klasse
 			if ($rowCount++ % 2 == 1 ) {$even = ' class="even"';} // Ved oddetall får <tr> klassen .even
 			// Skriv ut rader.
- 		   echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+ 		   	if ($catnr != NULL && $catId[0][0] == $catnr) {
+ 		   		echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+			}
+			elseif ($catnr == NULL) {
+ 		   		echo "<tr".$even."><td>".$row['name']."</td><td>".$row['descr']."</td><td>".$cat[0][1]."</td><td>".$row['quantity']."</td><td>".$row['price'].",-</td><td><a href='?add=".$row['itemID']."'>Kjøp</a></td></tr>", "\n";
+			}
 			}
 		
 		// Avslutt tabell

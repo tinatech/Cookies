@@ -25,9 +25,13 @@ include_once("header.php");
 		
 		//*************** SHOW ITEMS ***************//
 		
+		if (isset($_GET['cat']) && is_numeric($_GET['cat'])) {
+			$gui::h2("Varer");
+			$view::showItemsFront($_SESSION['sortByItem'], $_GET['cat']);
+		}
 		else {
-		$gui::h2("Varer");
-		$view::showItemsFront($_SESSION['sortByItem']);
+			$gui::h2("Varer");
+			$view::showItemsFront($_SESSION['sortByItem'], "");
 		}
 		
 		
