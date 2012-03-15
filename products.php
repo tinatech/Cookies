@@ -11,8 +11,9 @@ include_once("header.php");
 		$sql = "SELECT * FROM `category` ORDER BY name ASC";
 		$sth = $db->dbQuery($sql);
 		echo "<div id='secondmenu' style='margin-left: -5px'><ul>";
+		echo "<a href='products.php'><li class='first'>Alle</li></a>";
 		foreach($sth as $row) { 
-		 echo "<a href='?show=".$row['catID']."'><li class='first'>".$row['name']."</li></a>";
+		 echo "<a href='?cat=".$row['catID']."'><li>".$row['name']."</li></a>";
 		}
 		echo "</ul></div>";
 		
